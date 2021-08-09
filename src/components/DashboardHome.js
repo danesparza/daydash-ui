@@ -1,5 +1,6 @@
 import '../App.css';
 import 'weathericons/css/weather-icons.css';
+import Clock from './calendar/clock';
 
 function DashboardHome() {
   return (
@@ -19,7 +20,7 @@ function DashboardHome() {
 
             {/* The time and calendar section  */}
             <div className="column has-text-centered currentTimeDisplay">
-              4:26 pm
+              <Clock/>
             </div>          
           </div>
 
