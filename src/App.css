@@ -1,7 +1,20 @@
+/* Fix body height issue using https://stackoverflow.com/a/25829844/19020 */
+html{ overflow: auto;} /* hide scrollbars */
+body {
+    height: 100vh;
+    padding: 0;
+    margin: 0;  /* For Chrome, because its default stylesheet adds margin */  
+  }
+/*****************************/
+
 .currentTempDisplay {
     font-size: 8vw;
 }
 
 .currentTimeDisplay {
     font-size: 8vw;
+}
+
+.bodyDark {
+    background-color: black;
 }
