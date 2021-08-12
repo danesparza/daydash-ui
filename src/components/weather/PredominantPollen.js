@@ -6,7 +6,7 @@ const checkIfExists = (props) => {
 
 function PredominantPollen(props) {
     //  Format the pollen information:    
-    let retval = "Pollen information not found";
+    let retval = "Loading ...";
     if(checkIfExists(props)){
         retval = props.pollen.data.predominant_pollen;
     }
