@@ -4,6 +4,12 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+//  API imports
+import PollenAPI from './api/pollen.api';
+
+//  Kick off API initialization
+PollenAPI.getPollen("30019"); //  We could just let the API get this based on the stored zipcode
+
 ReactDOM.render(
   <React.StrictMode>
     <App />
