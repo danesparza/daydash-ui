@@ -1,9 +1,12 @@
-import '../App.css';
-import 'weathericons/css/weather-icons.css';
-import Clock from './calendar/clock';
 import { Component } from 'react';
+
+//  Components
+import Clock from './calendar/clock';
+import DateDisplay from './calendar/datedisplay';
+import WeatherBox from './weather/WeatherBox';
+
+//  Stores
 import PollenStore from '../stores/PollenStore';
-import PredominantPollen from './weather/PredominantPollen';
 
 class DashboardHome extends Component {
 
@@ -34,21 +37,20 @@ componentWillUnmount() {
           <div className="columns">
             
             {/* The weather section  */}
-            <div className="column has-text-centered currentTempDisplay">              
-                <span className="icon">
-                  <i className="wi wi-day-sunny"></i>
-                </span>              
-                &nbsp;&nbsp;84&deg;
-
-                <div className="predomPollen">
-                  <PredominantPollen pollen={this.state.pollen} />
-                </div>
+            <div className="column weatherContainer">              
+                <WeatherBox />
             </div>
   
             {/* The time and calendar section  */}
-            <div className="column has-text-centered currentTimeDisplay">
-              <Clock/>
-            </div>          
+            <div className="column has-text-centered">
+              <div className="currentTimeDisplay">
+                <Clock/>
+              </div>
+              <div className="currentDateDisplay">
+                <DateDisplay/>
+              </div>
+              
+            </div>                      
           </div>
   
         </div>

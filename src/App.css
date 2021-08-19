@@ -7,18 +7,82 @@ body {
   }
 /*****************************/
 
-.currentTempDisplay {
+.currentConditions{
+    font-size: 2.5vw;
+    font-weight: bold;
+}
+
+.currentTemp {
     font-size: 8vw;
+}
+
+.weatherContainer {
+    padding-top: 40px;
+}
+
+.weatherAlertMessageBody {
+    padding: .5em .5em
+}
+
+.weatherAlertQR{
+    vertical-align: middle;
+    margin: 0 10px 0 0;
+}
+
+.predomPollen {
+    font-size: 1.2vw;
+}
+
+.currentConditionsExtra{
+    font-size: 1.2vw;
+}
+
+.weatherHourlyCurrentTime{
+    font-size: 1vw;
+    font-weight: bold;
+}
+
+.weatherHourlyCurrentTemp{
+    font-size: 2.5vw;
+    font-weight: bold;
+}
+
+.weatherHourlyTime{
+    font-size: 1vw
+}
+
+.weatherHourlyTemp{
+    font-size: 1.3vw
+}
+
+.weatherHourlyPOP{
+    font-size: 1vw;
+    color: cornflowerblue;
+}
+
+.weatherWeek{
+    margin: 10px 0 0 0;
+}
+
+.weatherWeekday{
+    background-color: #121212;
 }
 
 .currentTimeDisplay {
     font-size: 8vw;
 }
 
-.predomPollen {
+.currentDateDisplay{
     font-size: 2vw;
 }
 
 .bodyDark {
     background-color: black;
+}
+
+.newsFooter {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 300px;
 }
