@@ -68,6 +68,42 @@ body {
     background-color: #121212;
 }
 
+.weatherWeekCurrentDate{
+    border-color: grey;
+    border-style: solid;
+    border-width: 1px;
+}
+
+.weatherWeekDate{
+    font-size: 1vw;
+    font-weight: bold;
+}
+
+.weatherWeekTemp{
+    font-size: 1.3vw;
+}
+
+.weatherWeekPollen{
+    color: #fff;
+    font-size: .8vw
+}
+
+.pollen-danger{
+    background-color: red;
+}
+
+.pollen-warn{
+    background-color: orange;
+}
+
+.pollen-low{
+    background-color: green;
+}
+
+.pollen-verylow{
+    background-color: grey;
+}
+
 .currentTimeDisplay {
     font-size: 8vw;
 }
@@ -76,13 +112,22 @@ body {
     font-size: 2vw;
 }
 
+.newsItem{
+    background-color: #121212;
+    min-height: 24vh; /* This might be crazy */
+}
+
+.newsContent{
+    font-size: .6vw;
+    padding: 10px;
+}
+
+.newsQR{
+    margin: 0 0 0 10px;
+}
+
 .bodyDark {
     background-color: black;
 }
 
-.newsFooter {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    height: 300px;
-}
+

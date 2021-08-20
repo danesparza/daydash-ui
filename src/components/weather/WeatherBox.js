@@ -8,22 +8,20 @@ function WeatherBox(props) {
         <div>
 
             {/* If we have a message, display it here, otherwise this is hidden */}            
-            <article className="message is-warning">
-                <div className="message-body weatherAlertMessageBody">
-                    <QRCode
-                        value={"https://www.weather.gov/"}
-                        size={40}
-                        bgColor={'transparent'}
-                        fgColor={"#946c00"}
-                        level={"L"}
-                        includeMargin={false}
-                        renderAs={"svg"}
-                        className="weatherAlertQR"
-                        />
+            <div className="notification is-link">                
+                <QRCode
+                    value={"https://www.weather.gov/"}
+                    size={40}
+                    bgColor={'transparent'}
+                    fgColor={"#fff"}
+                    level={"L"}
+                    includeMargin={false}
+                    renderAs={"svg"}
+                    className="weatherAlertQR"
+                    />
 
-                    <strong>Flash Flood Watch</strong>
-                </div>
-            </article>      
+                <strong>Flash Flood Watch</strong>                
+            </div>      
 
             {/* Regular weather box starts here with the current conditions display */}
             <div className="currentConditions">
@@ -87,50 +85,57 @@ function WeatherBox(props) {
             </div>
 
             {/* Current and daily conditions */}
-            <div className="columns weatherWeek">                
-                <div className="column">
-                    <p>Tue</p>
-                    <p>icon</p>
-                    <p><strong>77&deg;</strong></p>
-                    <p>70&deg;</p>
+            <div className="columns weatherWeek has-text-centered">                
+                <div className="column weatherWeekCurrentDate">
+                    <p className="weatherWeekDate">Tue</p>
+                    <p><img alt="" src="/wi/partly-cloudy-day.svg"/></p>
+                    <p className="weatherWeekTemp"><strong>77&deg;</strong></p>
+                    <p className="weatherWeekTemp">70&deg;</p>
+                    <div className="weatherWeekPollen pollen-low">Pollen: 3.4</div>
                 </div>
                 <div className="column weatherWeekday">
-                    <p>Wed</p>
-                    <p>icon</p>
-                    <p><strong>77&deg;</strong></p>
-                    <p>70&deg;</p>
+                    <p className="weatherWeekDate">Wed</p>
+                    <p><img alt="" src="/wi/rain.svg"/></p>
+                    <p className="weatherWeekTemp"><strong>77&deg;</strong></p>
+                    <p className="weatherWeekTemp">70&deg;</p>
+                    <div className="weatherWeekPollen pollen-warn">Pollen: 5.4</div>
                 </div>
                 <div className="column weatherWeekday">
-                    <p>Thu</p>
-                    <p>icon</p>
-                    <p><strong>77&deg;</strong></p>
-                    <p>70&deg;</p>
+                    <p className="weatherWeekDate">Thu</p>
+                    <p><img alt="" src="/wi/rain.svg"/></p>
+                    <p className="weatherWeekTemp"><strong>77&deg;</strong></p>
+                    <p className="weatherWeekTemp">70&deg;</p>
+                    <div className="weatherWeekPollen pollen-warn">Pollen 6.8</div>
                 </div>
                 <div className="column weatherWeekday">
-                    <p>Fri</p>
-                    <p>icon</p>
-                    <p><strong>77&deg;</strong></p>
-                    <p>70&deg;</p>
+                    <p className="weatherWeekDate">Fri</p>
+                    <p><img alt="" src="/wi/rain.svg"/></p>
+                    <p className="weatherWeekTemp"><strong>77&deg;</strong></p>
+                    <p className="weatherWeekTemp">70&deg;</p>
+                    <div className="weatherWeekPollen pollen-danger">Pollen: 10.2</div>
                 </div>
                 <div className="column weatherWeekday">
-                    <p>Sat</p>
-                    <p>icon</p>
-                    <p><strong>77&deg;</strong></p>
-                    <p>70&deg;</p>
+                    <p className="weatherWeekDate">Sat</p>
+                    <p><img alt="" src="/wi/partly-cloudy-day.svg"/></p>
+                    <p className="weatherWeekTemp"><strong>77&deg;</strong></p>
+                    <p className="weatherWeekTemp">70&deg;</p>
+                    <div className="weatherWeekPollen"></div>
                 </div>
                 <div className="column weatherWeekday">
-                    <p>Sun</p>
-                    <p>icon</p>
-                    <p><strong>77&deg;</strong></p>
-                    <p>70&deg;</p>
+                    <p className="weatherWeekDate">Sun</p>
+                    <p><img alt="" src="/wi/cloudy.svg"/></p>
+                    <p className="weatherWeekTemp"><strong>77&deg;</strong></p>
+                    <p className="weatherWeekTemp">70&deg;</p>
+                    <div className="weatherWeekPollen"></div>
                 </div>               
                 <div className="column weatherWeekday">
-                    <p>Mon</p>
-                    <p>icon</p>
-                    <p><strong>77&deg;</strong></p>
-                    <p>70&deg;</p>
+                    <p className="weatherWeekDate">Mon</p>
+                    <p><img alt="" src="/wi/clear-day.svg"/></p>
+                    <p className="weatherWeekTemp"><strong>77&deg;</strong></p>
+                    <p className="weatherWeekTemp">70&deg;</p>
+                    <div className="weatherWeekPollen"></div>
                 </div>                
-            </div>    
+            </div> 
         </div>        
     );
 }
