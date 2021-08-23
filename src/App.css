@@ -10,13 +10,17 @@ body {
   }
 /*****************************/
 
+.dashboard{
+    flex: 1;
+}
+
 .currentTemp{
     font-size: 8vw;
 }
 
 .currentConditions{
     position: relative;
-    max-height: 12vh;
+    max-width: 8vw;
     top: 2vh;
 }
 
@@ -130,4 +134,7 @@ body {
     margin: 0 0 0 10px;
 }
 
+.dashboardFooter {
+    padding: 3rem 1.5rem 1rem;
+}
 

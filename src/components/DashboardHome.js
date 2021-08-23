@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import React, { Component } from 'react';
 
 //  Styles
 import '../App.css';
@@ -34,38 +34,41 @@ componentWillUnmount() {
   render() {
 
     return (
-      <div className="App">        
+      <React.Fragment>
+        <div className="dashboard">        
         
-        <div className="container is-fluid">
-  
-          {/* Weather and calendar blocks  */}
-          <div className="columns">
-            
-            {/* The weather section  */}
-            <div className="column">              
-                <WeatherBox />
-            </div>
-  
-            {/* The time and calendar section  */}
-            <div className="column has-text-centered">
-              <div className="currentTimeDisplay">
-                <Clock/>
-              </div>
-              <div className="currentDateDisplay">
-                <DateDisplay/>
-              </div>
+          <div className="container is-fluid">
+    
+            {/* Weather and calendar blocks  */}
+            <div className="columns">
               
-            </div>                      
+              {/* The weather section  */}
+              <div className="column">              
+                  <WeatherBox />
+              </div>
+    
+              {/* The time and calendar section  */}
+              <div className="column has-text-centered">
+                <div className="currentTimeDisplay">
+                  <Clock/>
+                </div>
+                <div className="currentDateDisplay">
+                  <DateDisplay/>
+                </div>
+                
+              </div>                      
+            </div>            
           </div>
-
+          
+        </div>
+        <footer className="dashboardFooter">
           {/* News at the bottom  */}
           <div className="columns">
               <NewsBox/>
           </div>
-  
-        </div>
-        
-      </div>
+        </footer>
+      </React.Fragment>
+      
     );    
   }
 
