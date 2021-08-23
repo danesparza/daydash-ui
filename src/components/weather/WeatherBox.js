@@ -1,88 +1,54 @@
-import '../../App.css';
-import QRCode from 'qrcode.react';
+import QRCode from 'qrcode.react'; // Used in the weather notification.  We can move that to its own component
 
 function WeatherBox(props) {
 
     //  Render the current time
     return (
-        <div>
+        <div>                
+            
+            <div className="columns">
 
-            {/* If we have a message, display it here, otherwise this is hidden */}            
-            <div className="notification is-link">                
-                <QRCode
-                    value={"https://www.weather.gov/"}
-                    size={40}
-                    bgColor={'transparent'}
-                    fgColor={"#fff"}
-                    level={"L"}
-                    includeMargin={false}
-                    renderAs={"svg"}
-                    className="weatherAlertQR"
-                    />
+                {/* Regular weather box starts here with the current conditions display */}
+                <div className="column has-text-centered">
+                    <img className="currentConditions" src="/wi/partly-cloudy-day.svg" alt=""/> <span className="currentTemp">86&deg;</span>
+                </div>
 
-                <strong>Flash Flood Watch</strong>                
-            </div>      
+                {/* Radar image, if storm is approaching */}
+                {/* <div className="column"><img className="radarImage" alt="" src="https://s.w-x.co/staticmaps/wu/wxtype/county_loc/csg/animate.png"/></div>*/}
+            </div>
+            
+            <div className="columns">
 
-            {/* Regular weather box starts here with the current conditions display */}
-            <div className="currentConditions">
-                Mostly Cloudy
+                {/* Current pollen and extra conditions information */}
+                <div className="column">                    
+                    <div className="currentConditionsExtra">
+                        Humidity: <strong>72%</strong>  Wind: <strong>7mph SE</strong>
+                    </div>
+                    <div className="predomPollen">
+                        Pollen: <strong>Grasses, Plantains, Lingonberries</strong>
+                    </div>
+                </div>
+                
+                {/* If we have a message, display it here, otherwise this is hidden */}
+                {/*
+                <div className="column">                                                     
+                    <div className="notification is-link">                
+                        <QRCode
+                            value={"https://www.weather.gov/"}
+                            size={40}
+                            bgColor={'transparent'}
+                            fgColor={"#fff"}
+                            level={"L"}
+                            includeMargin={false}
+                            renderAs={"svg"}
+                            className="weatherAlertQR"
+                            />
+
+                        <strong>Flash Flood Watch</strong>                
+                    </div>                      
+                </div>
+                */}
             </div>            
-
-            {/* Radar image, if storm is approaching */}
-            {/*<div className="columns"><div className="column">Storm approaching</div><div className="column"><img alt="" src="https://s.w-x.co/staticmaps/wu/wxtype/county_loc/csg/animate.png"/></div></div> */}           
-
-            {/* Current and hourly conditions */}
-            <div className="columns has-text-centered">                
-                <div className="column">
-                    <p className="weatherHourlyCurrentTime">12pm</p>
-                    <p><img alt="" src="/wi/partly-cloudy-day.svg"/></p>
-                    <p className="weatherHourlyCurrentTemp">81&deg;</p>
-                </div>
-                <div className="column">
-                    <p className="weatherHourlyTime">3pm</p>
-                    <p><img alt="" src="/wi/cloudy.svg"/></p>
-                    <p className="weatherHourlyTemp">81&deg;</p>
-                    <p class="weatherHourlyPOP"><img alt="" src="/wi/raindrop.svg"/> 20%</p>
-                </div>
-                <div className="column">
-                    <p className="weatherHourlyTime">6pm</p>
-                    <p><img alt="" src="/wi/rain.svg"/></p>
-                    <p className="weatherHourlyTemp">81&deg;</p>
-                    <p class="weatherHourlyPOP"><img alt="" src="/wi/raindrop.svg"/> 40%</p>
-                </div>
-                <div className="column">
-                    <p className="weatherHourlyTime">9pm</p>
-                    <p><img alt="" src="/wi/rain.svg"/></p>
-                    <p className="weatherHourlyTemp">81&deg;</p>
-                    <p class="weatherHourlyPOP"><img alt="" src="/wi/raindrop.svg"/> 30%</p>
-                </div>
-                <div className="column">
-                    <p className="weatherHourlyTime">12am</p>
-                    <p><img alt="" src="/wi/rain.svg"/></p>
-                    <p className="weatherHourlyTemp">81&deg;</p>
-                    <p class="weatherHourlyPOP"><img alt="" src="/wi/raindrop.svg"/> 20%</p>
-                </div>
-                <div className="column">
-                    <p className="weatherHourlyTime">3am</p>
-                    <p><img alt="" src="/wi/rain.svg"/></p>
-                    <p className="weatherHourlyTemp">81&deg;</p>
-                    <p class="weatherHourlyPOP"><img alt="" src="/wi/raindrop.svg"/> 20%</p>
-                </div>               
-                <div className="column">
-                    <p className="weatherHourlyTime">6am</p>
-                    <p><img alt="" src="/wi/rain.svg"/></p>
-                    <p className="weatherHourlyTemp">81&deg;</p>
-                    <p class="weatherHourlyPOP"><img alt="" src="/wi/raindrop.svg"/> 20%</p>
-                </div>                
-            </div> 
-
-            {/* Current pollen and extra conditions information */}
-            <div className="predomPollen">
-                Pollen: <strong>Grasses, Plantains, Lingonberries</strong>
-            </div>
-            <div className="currentConditionsExtra">
-                Humidity: <strong>72%</strong>  Wind: <strong>7mph SE</strong>
-            </div>
 
             {/* Current and daily conditions */}
             <div className="columns weatherWeek has-text-centered">                

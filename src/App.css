@@ -1,23 +1,27 @@
 /* Fix body height issue using https://stackoverflow.com/a/25829844/19020 */
 html{ overflow: auto;} /* hide scrollbars */
 body {
-    height: 100vh;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
     padding: 0;
     margin: 0;  /* For Chrome, because its default stylesheet adds margin */  
+    background-color: black;
   }
 /*****************************/
 
-.currentConditions{
-    font-size: 2.5vw;
-    font-weight: bold;
-}
-
-.currentTemp {
+.currentTemp{
     font-size: 8vw;
 }
 
-.weatherContainer {
-    padding-top: 40px;
+.currentConditions{
+    position: relative;
+    max-height: 12vh;
+    top: 2vh;
+}
+
+.radarImage {
+    margin-top: 20px;
 }
 
 .weatherAlertMessageBody {
@@ -124,10 +128,6 @@ body {
 
 .newsQR{
     margin: 0 0 0 10px;
-}
-
-.bodyDark {
-    background-color: black;
 }
 
 
