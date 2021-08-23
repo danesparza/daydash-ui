@@ -55,6 +55,25 @@ componentWillUnmount() {
                 <div className="currentDateDisplay">
                   <DateDisplay/>
                 </div>
+                <div className="calendarContainer has-text-left">
+                  <table className="table calendarTable is-fullwidth">
+                    <thead>
+                      <tr>
+                        <th>Time</th><th>Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>8:30am-9:30am</td>
+                        <td>Mom & Dad coffee meeting</td>
+                      </tr>
+                      <tr>
+                        <td>11:30am-2:30pm</td>
+                        <td>2-to-1 meeting</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
                 
               </div>                      
             </div>            
