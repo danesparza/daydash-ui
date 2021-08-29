@@ -7,7 +7,9 @@ class PollenStore extends Store {
     constructor(){
       super(AppDispatcher);
   
+      //  Set initial expected state
       this.pollendata = {};
+      this.pollendata.predominant_pollen = "...";
     }
 
     GetPollen() {

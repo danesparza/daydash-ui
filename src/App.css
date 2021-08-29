@@ -112,6 +112,11 @@ body {
     background-color: grey;
 }
 
+.precipChance{
+    font-size: 1vw;
+    color: cornflowerblue;
+}
+
 .currentTimeDisplay {
     font-size: 8vw;
 }

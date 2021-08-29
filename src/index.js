@@ -7,10 +7,12 @@ import reportWebVitals from './reportWebVitals';
 //  API imports
 import PollenAPI from './api/pollen.api';
 import NewsAPI from './api/news.api';
+import WeatherAPI from './api/weather.api';
 
 //  Kick off API initialization
 PollenAPI.getPollen("30019"); //  We could just let the API get this based on the stored zipcode
 NewsAPI.getNews();
+WeatherAPI.getWeather("34.016410", "-83.906870"); //  We could just let the API get this based on the stored coordinates
 
 ReactDOM.render(
   <React.StrictMode>

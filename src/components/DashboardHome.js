@@ -12,10 +12,12 @@ import NewsBox from './news/NewsBox';
 //  Stores
 import PollenStore from '../stores/PollenStore';
 import NewsStore from '../stores/NewsStore';
+import WeatherStore from '../stores/WeatherStore';
 
 //  API imports
 import PollenAPI from '../api/pollen.api';
 import NewsAPI from '../api/news.api';
+import WeatherAPI from '../api/weather.api';
 
 class DashboardHome extends Component {
 
@@ -24,8 +26,17 @@ class DashboardHome extends Component {
 
     this.state = {
         pollen: PollenStore.GetPollen(),
-        news: NewsStore.GetNews()        
+        news: NewsStore.GetNews(),
+        weather: WeatherStore.GetWeather()        
     };
+  }
+
+  _onChange = () => {
+    this.setState({
+        pollen: PollenStore.GetPollen(),
+        news: NewsStore.GetNews(),
+        weather: WeatherStore.GetWeather()
+    });
   }
 
   componentDidMount() {    
@@ -34,7 +45,8 @@ class DashboardHome extends Component {
 
     //  Add store listeners
     this.pollenListener = PollenStore.addListener(this._onChange);
-    this.newsListener = NewsStore.addListener(this._onChange);    
+    this.newsListener = NewsStore.addListener(this._onChange);
+    this.weatherListener = WeatherStore.addListener(this._onChange);    
   }
 
   componentWillUnmount() {
@@ -44,6 +56,7 @@ class DashboardHome extends Component {
     //  Remove listeners
     this.pollenListener.remove();
     this.newsListener.remove();    
+    this.weatherListener.remove();
   }
 
   tick = () => {
@@ -52,6 +65,7 @@ class DashboardHome extends Component {
     //  these calls here
     PollenAPI.getPollen("30019"); //  We could just let the API get this based on the stored zipcode
     NewsAPI.getNews();
+    WeatherAPI.getWeather("34.016410", "-83.906870"); //  We could just let the API get this based on the stored coordinates
   }
 
   render() {
@@ -67,7 +81,7 @@ class DashboardHome extends Component {
               
               {/* The weather section  */}
               <div className="column">              
-                  <WeatherBox pollen={this.state.pollen} />
+                  <WeatherBox weather={this.state.weather} pollen={this.state.pollen} />
               </div>
     
               {/* The time and calendar section  */}
@@ -112,14 +126,7 @@ class DashboardHome extends Component {
       </React.Fragment>
       
     );    
-  }
-
-  _onChange = () => {
-    this.setState({
-        pollen: PollenStore.GetPollen(),
-        news: NewsStore.GetNews()        
-    });
-  } 
+  }   
   
 }
 

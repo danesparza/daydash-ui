@@ -1,9 +1,18 @@
 import QRCode from 'qrcode.react'; // Used in the weather notification.  We can move that to its own component
+import WeatherIcon from './WeatherIcon';
+import WeatherDay from './WeatherDay';
 
 function WeatherBox(props) {
 
-    //  Format the pollen
-    let fmtPredomPollen = props.pollen.predominant_pollen || "...";
+    //  Format the current temp
+    let currentTemp = Math.round(props.weather.currently.temperature);
+    let currentWindSpeed = Math.round(props.weather.currently.windSpeed);
+
+    //  For wind direction, we can use abbreviations from the compass rose: https://en.wikipedia.org/wiki/Points_of_the_compass
+
+    //  Get the collection of WeatherDay elements from the prop.news array
+    const currentWeatherDayItem = props.weather.daily.data.slice(0,1).map((item, index) =>  <WeatherDay today="true" pollen={props.pollen} index={index+1} weatherday={item} key={item.time}/>);
+    const weatherDayItems = props.weather.daily.data.slice(1,6).map((item, index) =>  <WeatherDay pollen={props.pollen} index={index+1} weatherday={item} key={item.time}/>);
 
     //  Render the weather info
     return (
@@ -13,7 +22,7 @@ function WeatherBox(props) {
 
                 {/* Regular weather box starts here with the current conditions display */}
                 <div className="column has-text-centered">
-                    <img className="currentConditions" src="/wi/partly-cloudy-day.svg" alt=""/> <span className="currentTemp">86&deg;</span>
+                    <WeatherIcon current="true" icon={props.weather.currently.icon} /> <span className="currentTemp">{currentTemp}&deg;</span>
                 </div>
 
                 {/* Radar image, if storm is approaching */}
@@ -25,10 +34,10 @@ function WeatherBox(props) {
                 {/* Current pollen and extra conditions information */}
                 <div className="column">                    
                     <div className="currentConditionsExtra">
-                        Humidity: <strong>72%</strong>  Wind: <strong>7mph SE</strong>
+                        Humidity: <strong>{props.weather.currently.humidity}%</strong>  Wind: <strong>{currentWindSpeed}mph SE</strong>
                     </div>
                     <div className="predomPollen">
-                        Pollen: <strong>{fmtPredomPollen}</strong>
+                        Pollen: <strong>{props.pollen.predominant_pollen}</strong>
                     </div>
                 </div>
                 
@@ -54,56 +63,9 @@ function WeatherBox(props) {
             </div>            
 
             {/* Current and daily conditions */}
-            <div className="columns weatherWeek has-text-centered">                
-                <div className="column weatherWeekCurrentDate">
-                    <p className="weatherWeekDate">Tue</p>
-                    <p><img alt="" src="/wi/partly-cloudy-day.svg"/></p>
-                    <p className="weatherWeekTemp"><strong>77&deg;</strong></p>
-                    <p className="weatherWeekTemp">70&deg;</p>
-                    <div className="weatherWeekPollen pollen-low">Pollen: 3.4</div>
-                </div>
-                <div className="column weatherWeekday">
-                    <p className="weatherWeekDate">Wed</p>
-                    <p><img alt="" src="/wi/rain.svg"/></p>
-                    <p className="weatherWeekTemp"><strong>77&deg;</strong></p>
-                    <p className="weatherWeekTemp">70&deg;</p>
-                    <div className="weatherWeekPollen pollen-warn">Pollen: 5.4</div>
-                </div>
-                <div className="column weatherWeekday">
-                    <p className="weatherWeekDate">Thu</p>
-                    <p><img alt="" src="/wi/rain.svg"/></p>
-                    <p className="weatherWeekTemp"><strong>77&deg;</strong></p>
-                    <p className="weatherWeekTemp">70&deg;</p>
-                    <div className="weatherWeekPollen pollen-warn">Pollen 6.8</div>
-                </div>
-                <div className="column weatherWeekday">
-                    <p className="weatherWeekDate">Fri</p>
-                    <p><img alt="" src="/wi/rain.svg"/></p>
-                    <p className="weatherWeekTemp"><strong>77&deg;</strong></p>
-                    <p className="weatherWeekTemp">70&deg;</p>
-                    <div className="weatherWeekPollen pollen-danger">Pollen: 10.2</div>
-                </div>
-                <div className="column weatherWeekday">
-                    <p className="weatherWeekDate">Sat</p>
-                    <p><img alt="" src="/wi/partly-cloudy-day.svg"/></p>
-                    <p className="weatherWeekTemp"><strong>77&deg;</strong></p>
-                    <p className="weatherWeekTemp">70&deg;</p>
-                    <div className="weatherWeekPollen"></div>
-                </div>
-                <div className="column weatherWeekday">
-                    <p className="weatherWeekDate">Sun</p>
-                    <p><img alt="" src="/wi/cloudy.svg"/></p>
-                    <p className="weatherWeekTemp"><strong>77&deg;</strong></p>
-                    <p className="weatherWeekTemp">70&deg;</p>
-                    <div className="weatherWeekPollen"></div>
-                </div>               
-                <div className="column weatherWeekday">
-                    <p className="weatherWeekDate">Mon</p>
-                    <p><img alt="" src="/wi/clear-day.svg"/></p>
-                    <p className="weatherWeekTemp"><strong>77&deg;</strong></p>
-                    <p className="weatherWeekTemp">70&deg;</p>
-                    <div className="weatherWeekPollen"></div>
-                </div>                
+            <div className="columns weatherWeek has-text-centered">                                
+                {currentWeatherDayItem}                
+                {weatherDayItems}
             </div> 
         </div>        
     );
