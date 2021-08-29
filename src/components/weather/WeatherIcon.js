@@ -16,7 +16,7 @@ function WeatherIcon(props) {
     switch(props.icon) 
     {
         case "01d":
-            imgUrl = "/wi/clear-day.svg.svg";
+            imgUrl = "/wi/clear-day.svg";
             imgAlt = "Clear sky";
             break;
         case "02d":

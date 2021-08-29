@@ -45,24 +45,6 @@ body {
     font-size: 1.2vw;
 }
 
-.weatherHourlyCurrentTime{
-    font-size: 1vw;
-    font-weight: bold;
-}
-
-.weatherHourlyCurrentTemp{
-    font-size: 2.5vw;
-    font-weight: bold;
-}
-
-.weatherHourlyTime{
-    font-size: 1vw
-}
-
-.weatherHourlyTemp{
-    font-size: 1.3vw
-}
-
 .weatherHourlyPOP{
     font-size: 1vw;
     color: cornflowerblue;
@@ -83,12 +65,12 @@ body {
 }
 
 .weatherWeekDate{
-    font-size: 1vw;
+    font-size: .8vw;
     font-weight: bold;
 }
 
 .weatherWeekTemp{
-    font-size: 1.3vw;
+    font-size: 1vw;
 }
 
 .weatherWeekPollen{
@@ -113,7 +95,7 @@ body {
 }
 
 .precipChance{
-    font-size: 1vw;
+    font-size: .7vw;
     color: cornflowerblue;
 }
 

@@ -22,7 +22,7 @@ function WeatherBox(props) {
 
                 {/* Regular weather box starts here with the current conditions display */}
                 <div className="column has-text-centered">
-                    <WeatherIcon current="true" icon={props.weather.currently.icon} /> <span className="currentTemp">{currentTemp}&deg;</span>
+                    <WeatherIcon current="true" icon={props.weather.currently.icon} /> <span className="currentTemp">{currentTemp}&deg;</span>                  
                 </div>
 
                 {/* Radar image, if storm is approaching */}
@@ -32,9 +32,12 @@ function WeatherBox(props) {
             <div className="columns">
 
                 {/* Current pollen and extra conditions information */}
-                <div className="column">                    
+                <div className="column">
                     <div className="currentConditionsExtra">
-                        Humidity: <strong>{props.weather.currently.humidity}%</strong>  Wind: <strong>{currentWindSpeed}mph SE</strong>
+                        Feels like <strong>98&deg;</strong>
+                    </div>                    
+                    <div className="currentConditionsExtra">                    
+                        Humidity: <strong>{props.weather.currently.humidity}%</strong>  Wind: <strong>{currentWindSpeed}mph SE</strong> 
                     </div>
                     <div className="predomPollen">
                         Pollen: <strong>{props.pollen.predominant_pollen}</strong>
