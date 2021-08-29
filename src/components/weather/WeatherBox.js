@@ -2,7 +2,10 @@ import QRCode from 'qrcode.react'; // Used in the weather notification.  We can 
 
 function WeatherBox(props) {
 
-    //  Render the current time
+    //  Format the pollen
+    let fmtPredomPollen = props.pollen.predominant_pollen || "...";
+
+    //  Render the weather info
     return (
         <div>                
             
@@ -25,7 +28,7 @@ function WeatherBox(props) {
                         Humidity: <strong>72%</strong>  Wind: <strong>7mph SE</strong>
                     </div>
                     <div className="predomPollen">
-                        Pollen: <strong>Grasses, Plantains, Lingonberries</strong>
+                        Pollen: <strong>{fmtPredomPollen}</strong>
                     </div>
                 </div>
                 

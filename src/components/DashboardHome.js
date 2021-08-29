@@ -7,10 +7,15 @@ import '../App.css';
 import Clock from './calendar/clock';
 import DateDisplay from './calendar/datedisplay';
 import WeatherBox from './weather/WeatherBox';
+import NewsBox from './news/NewsBox';
 
 //  Stores
 import PollenStore from '../stores/PollenStore';
-import NewsBox from './news/NewsBox';
+import NewsStore from '../stores/NewsStore';
+
+//  API imports
+import PollenAPI from '../api/pollen.api';
+import NewsAPI from '../api/news.api';
 
 class DashboardHome extends Component {
 
@@ -18,17 +23,35 @@ class DashboardHome extends Component {
     super(props);
 
     this.state = {
-        pollen: PollenStore.GetPollen(),        
+        pollen: PollenStore.GetPollen(),
+        news: NewsStore.GetNews()        
     };
   }
 
   componentDidMount() {    
-    //  Add store listeners ... and notify ME of changes
-    this.pollenListener = PollenStore.addListener(this._onChange);    
+    //  Add an interval tick for every 1 minutes:
+    this.interval = setInterval(this.tick, 60000);
+
+    //  Add store listeners
+    this.pollenListener = PollenStore.addListener(this._onChange);
+    this.newsListener = NewsStore.addListener(this._onChange);    
   }
 
-componentWillUnmount() {
-    this.pollenListener.remove();    
+  componentWillUnmount() {
+    //  Clear the interval:
+    clearInterval(this.interval);
+
+    //  Remove listeners
+    this.pollenListener.remove();
+    this.newsListener.remove();    
+  }
+
+  tick = () => {
+    //  Replace these with either calls that let the local API figure 
+    //  out what the config is, or gather the config before making 
+    //  these calls here
+    PollenAPI.getPollen("30019"); //  We could just let the API get this based on the stored zipcode
+    NewsAPI.getNews();
   }
 
   render() {
@@ -44,7 +67,7 @@ componentWillUnmount() {
               
               {/* The weather section  */}
               <div className="column">              
-                  <WeatherBox />
+                  <WeatherBox pollen={this.state.pollen} />
               </div>
     
               {/* The time and calendar section  */}
@@ -83,7 +106,7 @@ componentWillUnmount() {
         <footer className="dashboardFooter">
           {/* News at the bottom  */}
           <div className="columns">
-              <NewsBox/>
+              <NewsBox news={this.state.news}/>
           </div>
         </footer>
       </React.Fragment>
@@ -93,7 +116,8 @@ componentWillUnmount() {
 
   _onChange = () => {
     this.setState({
-        pollen: PollenStore.GetPollen(),        
+        pollen: PollenStore.GetPollen(),
+        news: NewsStore.GetNews()        
     });
   } 
   

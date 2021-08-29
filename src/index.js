@@ -6,9 +6,11 @@ import reportWebVitals from './reportWebVitals';
 
 //  API imports
 import PollenAPI from './api/pollen.api';
+import NewsAPI from './api/news.api';
 
 //  Kick off API initialization
 PollenAPI.getPollen("30019"); //  We could just let the API get this based on the stored zipcode
+NewsAPI.getNews();
 
 ReactDOM.render(
   <React.StrictMode>

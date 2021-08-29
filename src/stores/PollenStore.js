@@ -8,7 +8,6 @@ class PollenStore extends Store {
       super(AppDispatcher);
   
       this.pollendata = {};
-      this.pollendata.last_update_time = "Never";
     }
 
     GetPollen() {
@@ -21,8 +20,7 @@ class PollenStore extends Store {
     
           case DashboardConstants.RECIEVE_RAW_POLLEN:
             console.log('Updating pollen store: ', action);
-            this.pollendata = action.pollenData;
-            this.pollendata.last_update_time = "Recently"; // Change to formatted date/time
+            this.pollendata = action.data;
             this.__emitChange();
             break;
     

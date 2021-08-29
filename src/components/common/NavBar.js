@@ -20,9 +20,9 @@ function NavBar(props) {
             </a>
           </div>
         
-          <div id="navbarBasicExample" class="navbar-menu">
-            <div class="navbar-start">
-              <a class="navbar-item" href="/settings">
+          <div id="navbarBasicExample" className="navbar-menu">
+            <div className="navbar-start">
+              <a className="navbar-item" href="/settings">
                 Settings
               </a>        
             </div>

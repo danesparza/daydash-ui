@@ -5,7 +5,6 @@ class NewsAPI {
 
     /* Get breaking news information */
     getNews() {
-        //  The base url for the service - change this to your service location:
         let url = "//localhost:3010/v1/dashboard/news";
 
         let apiHeaders = new Headers({
@@ -14,7 +13,7 @@ class NewsAPI {
 
         fetch(url, {
                 mode: 'cors',
-                method: 'post',
+                method: 'get',
                 headers: apiHeaders
             })
             .then(

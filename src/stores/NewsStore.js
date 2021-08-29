@@ -8,7 +8,7 @@ class NewsStore extends Store {
       super(AppDispatcher);
   
       this.newsdata = {};
-      this.newsdata.last_update_time = "Never";
+      this.newsdata.items = [];
     }
 
     GetNews() {
@@ -21,8 +21,7 @@ class NewsStore extends Store {
     
           case DashboardConstants.RECIEVE_RAW_NEWS_EVENTS:
             console.log('Updating news store: ', action);
-            this.newsdata = action.newsData;
-            this.newsdata.last_update_time = "Recently"; // Change to formatted date/time
+            this.newsdata = action.data;
             this.__emitChange();
             break;
     

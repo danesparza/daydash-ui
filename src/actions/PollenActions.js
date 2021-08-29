@@ -6,7 +6,7 @@ class PollenActions {
     recievePollenData(pollenData, zipcode) {
         AppDispatcher.dispatch({
             actionType: DashboardConstants.RECIEVE_RAW_POLLEN,
-            pollenData: pollenData,
+            data: pollenData.data,
             zipcode: zipcode
         });
     }

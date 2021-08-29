@@ -6,7 +6,6 @@ class PollenAPI {
 
     /* Get pollen counts for the given zipcode */
     getPollen(zipcode) {
-        //  The base url for the service - change this to your service location:
         let url = "//localhost:3010/v1/dashboard/pollen";
 
         let apiHeaders = new Headers({

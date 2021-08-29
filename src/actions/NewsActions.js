@@ -6,7 +6,7 @@ class NewsActions {
     recieveNewsData(newsData) {
         AppDispatcher.dispatch({
             actionType: DashboardConstants.RECIEVE_RAW_NEWS_EVENTS,
-            newsData: newsData
+            data: newsData.data
         });
     }
 }
