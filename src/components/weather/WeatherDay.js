@@ -12,10 +12,12 @@ function WeatherDay(props) {
     let lowTemp = Math.round(props.weatherday.temperature);
 
     //  If there is a chance of precipitation greater than 10%, show it
+    //  Also show how much rain will fall, in inches (Inches = mm/25.4)      
     let precipChanceRow = "";
     let pop = Math.round(props.weatherday.precipProbability * 100);
+    let rainInInches = (props.weatherday.precipAccumulation / 25.4).toLocaleString("en-US", { maximumFractionDigits: 2, minimumFractionDigits: 2 });  // Inches = mm / 25.4
     if( pop > 10) {
-        precipChanceRow = <p className="precipChance"><img src="/wi/raindrop.svg" alt=""/> {pop}%</p>
+        precipChanceRow = <p className="precipChance"><img src="/wi/raindrop.svg" alt=""/> {pop}% / {rainInInches}in</p>
     }
 
     //  If we have a pollen item for the current day, use it

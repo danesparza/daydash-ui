@@ -30,7 +30,7 @@ function WeatherBox(props) {
                 </div>
 
                 {/* Radar image, if storm is approaching */}
-                <WeatherRadar hourlyweather={props.weather.hourly} />
+                <WeatherRadar hourlyweather={props.weather.hourly} currently={props.weather.currently} />
             </div>
             
             <div className="columns">

@@ -15,10 +15,14 @@ function WeatherRadar(props) {
     let radarImage = "";
     let showRadar = false;
 
-    if(props.hourlyweather.length > 0 && /* We have items in the array AND */ 
-        ((props.hourlyweather[0] !== undefined && props.hourlyweather[0].precipProbability > .50 && props.hourlyweather[0].precipAccumulation > .3) /* The first hour has precipitation */ 
+    if( (props.currently.precipProbability > .50 && props.currently.precipAccumulation > 2.5) /* We currently have a bit of precipitation */
+        || /* Or this whole next statement */
+        (props.hourlyweather.length > 0 /* We have items in the array */ 
+        && /* AND */ 
+        ((props.hourlyweather[0] !== undefined && props.hourlyweather[0].precipProbability > .50 && props.hourlyweather[0].precipAccumulation > 2.5) /* The first hour has precipitation */ 
         || /* or ... */
-        (props.hourlyweather[1] !== undefined && props.hourlyweather[1].precipProbability > .50 && props.hourlyweather[1].precipAccumulation > .3))){ /* The second hour has precipitation */
+        (props.hourlyweather[1] !== undefined && props.hourlyweather[1].precipProbability > .50 && props.hourlyweather[1].precipAccumulation > 2.5)))) /* The second hour has precipitation */
+    {
         showRadar = true; // Show the radar image
     }
 

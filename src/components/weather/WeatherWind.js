@@ -16,7 +16,7 @@ function WeatherWind(props) {
 
     return(
         <Fragment>
-           {props.speed} mph {fmtDirection}
+           {props.speed}mph {fmtDirection}
         </Fragment>        
     );
 }
