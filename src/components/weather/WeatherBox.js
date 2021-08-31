@@ -1,17 +1,19 @@
 import QRCode from 'qrcode.react'; // Used in the weather notification.  We can move that to its own component
 import WeatherIcon from './WeatherIcon';
 import WeatherDay from './WeatherDay';
+import WeatherRadar from './WeatherRadar';
 
 function WeatherBox(props) {
 
     //  Format the current temp
     let currentTemp = Math.round(props.weather.currently.temperature);
+    let currentApparentTemp = Math.round(props.weather.currently.apparentTemperature);
     let currentWindSpeed = Math.round(props.weather.currently.windSpeed);
 
     //  For wind direction, we can use abbreviations from the compass rose: https://en.wikipedia.org/wiki/Points_of_the_compass
 
     //  Get the collection of WeatherDay elements from the prop.news array
-    const currentWeatherDayItem = props.weather.daily.data.slice(0,1).map((item, index) =>  <WeatherDay today="true" pollen={props.pollen} index={index+1} weatherday={item} key={item.time}/>);
+    const currentWeatherDayItem = props.weather.daily.data.slice(0,1).map((item, index) =>  <WeatherDay today="true" pollen={props.pollen} index={index} weatherday={item} key={item.time}/>);
     const weatherDayItems = props.weather.daily.data.slice(1,6).map((item, index) =>  <WeatherDay pollen={props.pollen} index={index+1} weatherday={item} key={item.time}/>);
 
     //  Render the weather info
@@ -26,7 +28,7 @@ function WeatherBox(props) {
                 </div>
 
                 {/* Radar image, if storm is approaching */}
-                {/* <div className="column"><img className="radarImage" alt="" src="https://s.w-x.co/staticmaps/wu/wxtype/county_loc/csg/animate.png"/></div>*/}
+                <WeatherRadar hourlyweather={props.weather.hourly} />
             </div>
             
             <div className="columns">
@@ -34,7 +36,7 @@ function WeatherBox(props) {
                 {/* Current pollen and extra conditions information */}
                 <div className="column">
                     <div className="currentConditionsExtra">
-                        Feels like <strong>98&deg;</strong>
+                        Feels like <strong>{currentApparentTemp}&deg;</strong>
                     </div>                    
                     <div className="currentConditionsExtra">                    
                         Humidity: <strong>{props.weather.currently.humidity}%</strong>  Wind: <strong>{currentWindSpeed}mph SE</strong> 

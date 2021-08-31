@@ -1,7 +1,10 @@
 import React from "react";
 import QRCode from 'qrcode.react';
+import ago from 's-ago';
 
 function NewsItem(props) {
+
+    const createTime = new Date(props.item.createtime * 1000);
 
     return (
         <div className="column">              
@@ -21,7 +24,7 @@ function NewsItem(props) {
                         renderAs={"svg"}
                         className="newsQR is-pulled-right"
                         />                 
-                    {props.item.text}                  
+                    {props.item.text} - {ago(createTime)}                 
                 </div>
             </div>
             </div>

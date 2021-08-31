@@ -8,16 +8,19 @@ import Clock from './calendar/clock';
 import DateDisplay from './calendar/datedisplay';
 import WeatherBox from './weather/WeatherBox';
 import NewsBox from './news/NewsBox';
+import CalendarBox from './calendar/CalendarBox';
 
 //  Stores
 import PollenStore from '../stores/PollenStore';
 import NewsStore from '../stores/NewsStore';
 import WeatherStore from '../stores/WeatherStore';
+import CalendarStore from '../stores/CalendarStore';
 
 //  API imports
 import PollenAPI from '../api/pollen.api';
 import NewsAPI from '../api/news.api';
 import WeatherAPI from '../api/weather.api';
+import CalendarAPI from '../api/calendar.api';
 
 class DashboardHome extends Component {
 
@@ -27,7 +30,8 @@ class DashboardHome extends Component {
     this.state = {
         pollen: PollenStore.GetPollen(),
         news: NewsStore.GetNews(),
-        weather: WeatherStore.GetWeather()        
+        weather: WeatherStore.GetWeather(),
+        calendar: CalendarStore.GetCalendarEvents()        
     };
   }
 
@@ -35,7 +39,8 @@ class DashboardHome extends Component {
     this.setState({
         pollen: PollenStore.GetPollen(),
         news: NewsStore.GetNews(),
-        weather: WeatherStore.GetWeather()
+        weather: WeatherStore.GetWeather(),
+        calendar: CalendarStore.GetCalendarEvents()
     });
   }
 
@@ -47,6 +52,7 @@ class DashboardHome extends Component {
     this.pollenListener = PollenStore.addListener(this._onChange);
     this.newsListener = NewsStore.addListener(this._onChange);
     this.weatherListener = WeatherStore.addListener(this._onChange);    
+    this.calendarListener = CalendarStore.addListener(this._onChange);
   }
 
   componentWillUnmount() {
@@ -57,6 +63,7 @@ class DashboardHome extends Component {
     this.pollenListener.remove();
     this.newsListener.remove();    
     this.weatherListener.remove();
+    this.calendarListener.remove();
   }
 
   tick = () => {
@@ -66,6 +73,7 @@ class DashboardHome extends Component {
     PollenAPI.getPollen("30019"); //  We could just let the API get this based on the stored zipcode
     NewsAPI.getNews();
     WeatherAPI.getWeather("34.016410", "-83.906870"); //  We could just let the API get this based on the stored coordinates
+    CalendarAPI.getCalendarEvents("https://calendar.google.com/calendar/ical/mg8l31ag8ua059trmktgdq6v80%40group.calendar.google.com/private-342fffdc823bfcaea433775659169545/basic.ics", "America/New_York");
   }
 
   render() {
@@ -93,23 +101,7 @@ class DashboardHome extends Component {
                   <DateDisplay/>
                 </div>
                 <div className="calendarContainer has-text-left">
-                  <table className="table calendarTable is-fullwidth">
-                    <thead>
-                      <tr>
-                        <th>Time</th><th>Description</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>8:30am-9:30am</td>
-                        <td>Mom & Dad coffee meeting</td>
-                      </tr>
-                      <tr>
-                        <td>11:30am-2:30pm</td>
-                        <td>2-to-1 meeting</td>
-                      </tr>
-                    </tbody>
-                  </table>
+                  <CalendarBox events={this.state.calendar}/>
                 </div>
                 
               </div>                      

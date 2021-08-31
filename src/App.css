@@ -117,6 +117,14 @@ body {
     font-size: 1vw;
 }
 
+tbody.calendarBody{
+    background-color: #121212;
+}
+
+.eventTime{
+    width: 30%;
+}
+
 .newsItem{
     background-color: #121212;
     min-height: 24vh; /* This might be crazy */
