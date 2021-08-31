@@ -14,6 +14,7 @@ class WeatherStore extends Store {
       this.weatherdata.currently.apparentTemperature = 0;
       this.weatherdata.currently.humidity = 0;
       this.weatherdata.currently.windSpeed = 0;
+      this.weatherdata.currently.windBearing = 0;
       this.weatherdata.currently.icon = "";
       this.weatherdata.daily = {};
       this.weatherdata.daily.data = [];

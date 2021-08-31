@@ -4,7 +4,26 @@ import ago from 's-ago';
 
 function NewsItem(props) {
 
+    //  Get the create time as a date
     const createTime = new Date(props.item.createtime * 1000);
+
+    //  Format the news text so that ...
+    //  Any link is removed (from the end trim off anything including and after http)
+    let fmtText = props.item.text;
+    if(fmtText.indexOf("http") > 0){
+        fmtText = fmtText.substring(0, fmtText.indexOf("http"));
+    }    
+
+    //  Any last sentence is not used (from the end, trim off the last bit of text from the first period found)
+    if(fmtText.lastIndexOf(".") > 60){
+        fmtText = fmtText.substring(0, fmtText.lastIndexOf("."));
+    }
+
+    //  Finally ... trim after 100 chars and show an elipsis
+    //  TODO: We might be able to take this out if we hide navigation
+    if(fmtText.length > 110){
+        fmtText = fmtText.substring(0, 110) + "...";
+    }
 
     return (
         <div className="column">              
@@ -24,7 +43,7 @@ function NewsItem(props) {
                         renderAs={"svg"}
                         className="newsQR is-pulled-right"
                         />                 
-                    {props.item.text} - {ago(createTime)}                 
+                    {fmtText} - {ago(createTime)}                 
                 </div>
             </div>
             </div>

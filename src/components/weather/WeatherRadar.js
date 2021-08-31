@@ -5,7 +5,10 @@ function WeatherRadar(props) {
     const radarLocation = "csg";
 
     //  Format the url
-    const imageHash = Date.now();
+    const imageHash0 = new Date().toLocaleDateString("en-US", {day: 'numeric'});
+    const imageHash1 = new Date().toLocaleTimeString("en-US", {hour12 : false, hour:  "numeric" });
+    const imageHash2 = new Date().toLocaleTimeString("en-US", {hour12 : false, minute: "numeric" });
+    const imageHash = imageHash0 + "" + imageHash1 + "" + imageHash2.substring(0, imageHash2.length -1); // We're doing this to force no image caching -- time boxed to 10 minutes
     const radarUrl = `https://s.w-x.co/staticmaps/wu/wxtype/county_loc/${radarLocation}/animate.png?${imageHash}`
     
     //  If we have a chance of rain > 10% in the next two hours, show the radar image.  Otherwise, show nothing
@@ -13,9 +16,9 @@ function WeatherRadar(props) {
     let showRadar = false;
 
     if(props.hourlyweather.length > 0 && /* We have items in the array AND */ 
-        ((props.hourlyweather[0] !== undefined && props.hourlyweather[0].precipProbability > .20 && props.hourlyweather[0].precipAccumulation > 0) /* The first hour has precipitation */ 
+        ((props.hourlyweather[0] !== undefined && props.hourlyweather[0].precipProbability > .50 && props.hourlyweather[0].precipAccumulation > .3) /* The first hour has precipitation */ 
         || /* or ... */
-        (props.hourlyweather[1] !== undefined && props.hourlyweather[1].precipProbability > .20 && props.hourlyweather[1].precipAccumulation > 0))){ /* The second hour has precipitation */
+        (props.hourlyweather[1] !== undefined && props.hourlyweather[1].precipProbability > .50 && props.hourlyweather[1].precipAccumulation > .3))){ /* The second hour has precipitation */
         showRadar = true; // Show the radar image
     }
 

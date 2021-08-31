@@ -1,4 +1,3 @@
-import {Fragment} from 'react';
 
 function WeatherIcon(props) {
     
@@ -49,9 +48,7 @@ function WeatherIcon(props) {
     }
     
     return (
-        <Fragment>
-            <img className={iconClass} src={imgUrl} alt={imgAlt}/>      
-        </Fragment>
+        <img className={iconClass} src={imgUrl} alt={imgAlt}/>        
     );
 }
 

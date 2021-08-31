@@ -1,5 +1,6 @@
 import React from "react";
 import WeatherIcon from "./WeatherIcon";
+import WeatherTemp from './WeatherTemp';
 
 function WeatherDay(props) {
 
@@ -38,8 +39,8 @@ function WeatherDay(props) {
         <div className={itemClass}>
             <p className="weatherWeekDate">{weekDay}</p>
             <p><WeatherIcon current="true" icon={props.weatherday.icon} /></p>
-            <p className="weatherWeekTemp"><strong>{highTemp}&deg;</strong></p>
-            <p className="weatherWeekTemp">{lowTemp}&deg;</p>            
+            <p className="weatherWeekTemp"><strong><WeatherTemp temperature={highTemp} /></strong></p>
+            <p className="weatherWeekTemp"><WeatherTemp temperature={lowTemp} /></p>            
             {pollenRow}   
             {precipChanceRow}
         </div>

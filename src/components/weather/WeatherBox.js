@@ -2,6 +2,8 @@ import QRCode from 'qrcode.react'; // Used in the weather notification.  We can 
 import WeatherIcon from './WeatherIcon';
 import WeatherDay from './WeatherDay';
 import WeatherRadar from './WeatherRadar';
+import WeatherTemp from './WeatherTemp';
+import WeatherWind from './WeatherWind';
 
 function WeatherBox(props) {
 
@@ -24,7 +26,7 @@ function WeatherBox(props) {
 
                 {/* Regular weather box starts here with the current conditions display */}
                 <div className="column has-text-centered">
-                    <WeatherIcon current="true" icon={props.weather.currently.icon} /> <span className="currentTemp">{currentTemp}&deg;</span>                  
+                    <WeatherIcon current="true" icon={props.weather.currently.icon} /> <span className="currentTemp"><WeatherTemp temperature={currentTemp} /></span>                  
                 </div>
 
                 {/* Radar image, if storm is approaching */}
@@ -36,10 +38,10 @@ function WeatherBox(props) {
                 {/* Current pollen and extra conditions information */}
                 <div className="column">
                     <div className="currentConditionsExtra">
-                        Feels like <strong>{currentApparentTemp}&deg;</strong>
+                        Feels like <strong><WeatherTemp temperature={currentApparentTemp} /></strong>
                     </div>                    
                     <div className="currentConditionsExtra">                    
-                        Humidity: <strong>{props.weather.currently.humidity}%</strong>  Wind: <strong>{currentWindSpeed}mph SE</strong> 
+                        Humidity: <strong>{props.weather.currently.humidity}%</strong> / Wind: <strong><WeatherWind speed={currentWindSpeed} direction={props.weather.currently.windBearing} /></strong> 
                     </div>
                     <div className="predomPollen">
                         Pollen: <strong>{props.pollen.predominant_pollen}</strong>
