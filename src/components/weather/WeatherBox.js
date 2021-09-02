@@ -12,8 +12,6 @@ function WeatherBox(props) {
     let currentApparentTemp = Math.round(props.weather.currently.apparentTemperature);
     let currentWindSpeed = Math.round(props.weather.currently.windSpeed);
 
-    //  For wind direction, we can use abbreviations from the compass rose: https://en.wikipedia.org/wiki/Points_of_the_compass
-
     //  Get the collection of WeatherDay elements from the prop.news array
     const currentWeatherDayItem = props.weather.daily.data.slice(0,1).map((item, index) =>  <WeatherDay today="true" pollen={props.pollen} index={index} weatherday={item} key={item.time}/>);
     const weatherDayItems = props.weather.daily.data.slice(1,6).map((item, index) =>  <WeatherDay pollen={props.pollen} index={index+1} weatherday={item} key={item.time}/>);

@@ -9,14 +9,14 @@ function WeatherDay(props) {
     
     //  Get the high and low temps
     let highTemp = Math.round(props.weatherday.temperatureMax);
-    let lowTemp = Math.round(props.weatherday.temperature);
+    let lowTemp = Math.round(props.weatherday.temperatureMin);
 
-    //  If there is a chance of precipitation greater than 10%, show it
-    //  Also show how much rain will fall, in inches (Inches = mm/25.4)      
+    //  If there is a chance of precipitation greater than 10%, 
+    //  AND we'll get more than .05 of an inch, show both chance of rain and quantity
     let precipChanceRow = "";
     let pop = Math.round(props.weatherday.precipProbability * 100);
     let rainInInches = (props.weatherday.precipAccumulation / 25.4).toLocaleString("en-US", { maximumFractionDigits: 2, minimumFractionDigits: 2 });  // Inches = mm / 25.4
-    if( pop > 10) {
+    if( pop > 10 && rainInInches > .05) {
         precipChanceRow = <p className="precipChance"><img src="/wi/raindrop.svg" alt=""/> {pop}% / {rainInInches}in</p>
     }
 

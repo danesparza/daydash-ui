@@ -15,7 +15,7 @@ function WeatherRadar(props) {
     let radarImage = "";
     let showRadar = false;
 
-    if( (props.currently.precipProbability > .50 && props.currently.precipAccumulation > 2.5) /* We currently have a bit of precipitation */
+    if( (props.currently.precipAccumulation > 1) /* We currently have a bit of precipitation */
         || /* Or this whole next statement */
         (props.hourlyweather.length > 0 /* We have items in the array */ 
         && /* AND */ 

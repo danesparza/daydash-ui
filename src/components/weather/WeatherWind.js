@@ -2,6 +2,7 @@ import {Fragment} from 'react';
 
 function WeatherWind(props) {
 
+    //  For wind direction, we use abbreviations from the compass rose: https://en.wikipedia.org/wiki/Points_of_the_compass
     //  Format the wind direction
     let fmtDirection = "";
     if(props.direction > 0){ fmtDirection = "N";}
