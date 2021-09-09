@@ -11,7 +11,8 @@ function NewsBox(props) {
     dtFourHoursAgo.setTime(dtFourHoursAgo.getTime() + (-4*60*60*1000)); // Find four hours ago
 
     //  Get the earthquake information for quakes in the last 4 hours
-    const quakeFeatures = props.quakes.features.filter((item) => new Date(item.properties.time) > dtFourHoursAgo); // Find quakes that happened in the last 4 hours
+    let quakeFeatures = props.quakes.features;
+    quakeFeatures = quakeFeatures.filter((item) => new Date(item.properties.time) > dtFourHoursAgo); // Find quakes that happened in the last 4 hours
     const quakeItems = quakeFeatures.slice(0,1).map((item) => <QuakeItem item={item} key={item.id}/>);  // Get the most recent quake
 
     //  Get the collection of NewsItem elements from the prop.news array

@@ -10,6 +10,10 @@ body {
   }
 /*****************************/
 
+form.box{
+    background-color: #dadada;
+}
+
 .dashboard{
     flex: 1;
 }
@@ -143,3 +147,6 @@ tbody.calendarBody{
     padding: 3rem 1.5rem 1rem;
 }
 
+.settingsTitle{
+    padding: .5rem;
+}

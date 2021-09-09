@@ -9,8 +9,10 @@ function CalendarBox(props) {
     
     const todaysEvents = props.events.items.filter(item => new Date(item.starttime * 1000) < dtDaysEnd); // Get events that start before midnight tonight 
     const upcomingEvents = todaysEvents.filter(item => new Date(item.endtime * 1000) > dtNow); // Get events that end after right now
-    let calendarEvents = upcomingEvents.map((item) =>  <CalendarEvent event={item} key={item.uid}/>);
+    upcomingEvents.sort((item1, item2) => item1.starttime - item2.starttime); // Sort the items by starttime (this way, all day events are first)
+    let calendarEvents = upcomingEvents.map((item) =>  <CalendarEvent event={item} key={item.uid}/>); // Render the list of calendar event items
 
+    //  If we don't have any events, display a message
     if(calendarEvents.length === 0){
         calendarEvents = (<tr><td colSpan="2">No events left today</td></tr>); 
     }
