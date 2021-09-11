@@ -16,6 +16,7 @@ import NewsStore from '../stores/NewsStore';
 import WeatherStore from '../stores/WeatherStore';
 import CalendarStore from '../stores/CalendarStore';
 import QuakeStore from '../stores/QuakeStore';
+import NWSAlertsStore from '../stores/NWSAlertsStore';
 
 //  API imports
 import PollenAPI from '../api/pollen.api';
@@ -23,6 +24,7 @@ import NewsAPI from '../api/news.api';
 import WeatherAPI from '../api/weather.api';
 import CalendarAPI from '../api/calendar.api';
 import QuakeAPI from '../api/quake.api';
+import NWSAlertsAPI from '../api/nwsalerts.api';
 
 class DashboardHome extends Component {
 
@@ -34,7 +36,8 @@ class DashboardHome extends Component {
         news: NewsStore.GetNews(),
         weather: WeatherStore.GetWeather(),
         calendar: CalendarStore.GetCalendarEvents(),
-        quakes: QuakeStore.GetQuakes()
+        quakes: QuakeStore.GetQuakes(),
+        alerts: NWSAlertsStore.GetAlerts()
     };
   }
 
@@ -44,7 +47,8 @@ class DashboardHome extends Component {
         news: NewsStore.GetNews(),
         weather: WeatherStore.GetWeather(),
         calendar: CalendarStore.GetCalendarEvents(),
-        quakes: QuakeStore.GetQuakes()
+        quakes: QuakeStore.GetQuakes(),
+        alerts: NWSAlertsStore.GetAlerts()
     });
   }
 
@@ -58,6 +62,7 @@ class DashboardHome extends Component {
     this.weatherListener = WeatherStore.addListener(this._onChange);    
     this.calendarListener = CalendarStore.addListener(this._onChange);
     this.quakeListener = QuakeStore.addListener(this._onChange);
+    this.alertsListener = NWSAlertsStore.addListener(this._onChange);
   }
 
   componentWillUnmount() {
@@ -70,6 +75,7 @@ class DashboardHome extends Component {
     this.weatherListener.remove();
     this.calendarListener.remove();
     this.quakeListener.remove();
+    this.alertsListener.remove();
   }
 
   tick = () => {
@@ -80,6 +86,7 @@ class DashboardHome extends Component {
     NewsAPI.getNews();
     QuakeAPI.getQuakes();
     WeatherAPI.getWeather("34.016410", "-83.906870"); //  We could just let the API get this based on the stored coordinates
+    NWSAlertsAPI.getWeatherAlerts("34.016410", "-83.906870"); //  We could just let the API get this based on the stored coordinates
     CalendarAPI.getCalendarEvents("https://calendar.google.com/calendar/ical/mg8l31ag8ua059trmktgdq6v80%40group.calendar.google.com/private-342fffdc823bfcaea433775659169545/basic.ics", "America/New_York");
   }
 
@@ -96,7 +103,7 @@ class DashboardHome extends Component {
               
               {/* The weather section  */}
               <div className="column">              
-                  <WeatherBox weather={this.state.weather} pollen={this.state.pollen} />
+                  <WeatherBox weather={this.state.weather} pollen={this.state.pollen} alerts={this.state.alerts}/>
               </div>
     
               {/* The time and calendar section  */}

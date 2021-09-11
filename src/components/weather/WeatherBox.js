@@ -1,9 +1,9 @@
-import QRCode from 'qrcode.react'; // Used in the weather notification.  We can move that to its own component
 import WeatherIcon from './WeatherIcon';
 import WeatherDay from './WeatherDay';
 import WeatherRadar from './WeatherRadar';
 import WeatherTemp from './WeatherTemp';
 import WeatherWind from './WeatherWind';
+import WeatherAlert from './WeatherAlert';
 
 function WeatherBox(props) {
 
@@ -46,25 +46,8 @@ function WeatherBox(props) {
                     </div>
                 </div>
                 
-                {/* If we have a message, display it here, otherwise this is hidden */}
-                {/*
-                <div className="column">                                                     
-                    <div className="notification is-link">                
-                        <QRCode
-                            value={"https://www.weather.gov/"}
-                            size={40}
-                            bgColor={'transparent'}
-                            fgColor={"#fff"}
-                            level={"L"}
-                            includeMargin={false}
-                            renderAs={"svg"}
-                            className="weatherAlertQR"
-                            />
-
-                        <strong>Flash Flood Watch</strong>                
-                    </div>                      
-                </div>
-                */}
+                {/* If we have a weather alert, display it here.  Otherwise this is hidden */}
+                <WeatherAlert alerts={props.alerts} />
             </div>            
 
             {/* Current and daily conditions */}
