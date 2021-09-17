@@ -31,3 +31,9 @@ ReactDOM.render(
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals(console.log);
+
+// Create WebSocket connection (for config updates).
+const socket = new WebSocket('ws://10.0.1.220:3010/v1/ws');
+socket.onmessage = (msg) => {
+  console.log(msg);
+}

@@ -13,8 +13,8 @@ function WeatherBox(props) {
     let currentWindSpeed = Math.round(props.weather.currently.windSpeed);
 
     //  Get the collection of WeatherDay elements from the prop.news array
-    const currentWeatherDayItem = props.weather.daily.data.slice(0,1).map((item, index) =>  <WeatherDay today="true" pollen={props.pollen} index={index} weatherday={item} key={item.time}/>);
-    const weatherDayItems = props.weather.daily.data.slice(1,6).map((item, index) =>  <WeatherDay pollen={props.pollen} index={index+1} weatherday={item} key={item.time}/>);
+    const currentWeatherDayItem = props.weather.daily.data.slice(0,1).map((item, index) =>  <WeatherDay today="true" pollen={props.pollen} index={index} weatherday={item} latitude={props.weather.latitude} longitude={props.weather.longitude} key={item.time}/>);
+    const weatherDayItems = props.weather.daily.data.slice(1,6).map((item, index) =>  <WeatherDay pollen={props.pollen} index={index+1} weatherday={item} latitude={props.weather.latitude} longitude={props.weather.longitude} key={item.time}/>);
 
     //  Render the weather info
     return (
@@ -24,7 +24,7 @@ function WeatherBox(props) {
 
                 {/* Regular weather box starts here with the current conditions display */}
                 <div className="column has-text-centered">
-                    <WeatherIcon current="true" icon={props.weather.currently.icon} /> <span className="currentTemp"><WeatherTemp temperature={currentTemp} /></span>                  
+                    <WeatherIcon current="true" icon={props.weather.currently.icon} latitude={props.weather.latitude} longitude={props.weather.longitude} /> <span className="currentTemp"><WeatherTemp temperature={currentTemp} /></span>                  
                 </div>
 
                 {/* Radar image, if storm is approaching */}

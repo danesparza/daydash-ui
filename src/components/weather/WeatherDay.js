@@ -40,7 +40,7 @@ function WeatherDay(props) {
     return (
         <div className={itemClass}>
             <p className="weatherWeekDate">{weekDay}</p>
-            <p><WeatherIcon current="true" icon={props.weatherday.icon} /></p>
+            <p><WeatherIcon latitude={props.latitude} longitude={props.longitude} icon={props.weatherday.icon} /></p>
             <p className="weatherWeekTemp"><strong><WeatherTemp temperature={highTemp} /></strong></p>
             <p className="weatherWeekTemp"><WeatherTemp temperature={lowTemp} /></p>            
             {pollenRow}   

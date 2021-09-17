@@ -112,6 +112,8 @@ form.box{
 }
 
 .calendarContainer{
+    max-height: 38vh;
+    overflow:hidden;
     margin: 45px 0 0 0;
 }
 

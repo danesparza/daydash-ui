@@ -52,6 +52,10 @@ class DashboardHome extends Component {
     });
   }
 
+  _onSocket = (e) => {
+    console.log(e);
+  }
+
   componentDidMount() {    
     //  Add an interval tick for every 1 minutes:
     this.interval = setInterval(this.tick, 60000);
@@ -63,7 +67,7 @@ class DashboardHome extends Component {
     this.calendarListener = CalendarStore.addListener(this._onChange);
     this.quakeListener = QuakeStore.addListener(this._onChange);
     this.alertsListener = NWSAlertsStore.addListener(this._onChange);
-  }
+  }  
 
   componentWillUnmount() {
     //  Clear the interval:
@@ -93,8 +97,8 @@ class DashboardHome extends Component {
   render() {
 
     return (
-      <React.Fragment>
-        <div className="dashboard">        
+      <React.Fragment>       
+        <div className="dashboard is-hidden-mobile">        
         
           <div className="container is-fluid">
     
@@ -123,7 +127,7 @@ class DashboardHome extends Component {
           </div>
           
         </div>
-        <footer className="dashboardFooter">
+        <footer className="dashboardFooter is-hidden-mobile">
           {/* News at the bottom  */}
           <div className="columns">
               <NewsBox quakes={this.state.quakes} news={this.state.news}/>

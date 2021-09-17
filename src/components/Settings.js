@@ -13,7 +13,7 @@ class Settings extends Component {
       const lat = "33.610739" /*props.item.geometry.coordinates[1]*/;
       const long = "-111.891472" /*props.item.geometry.coordinates[0]*/;
       const zoom = "11";
-      const fmtImageURL = `http://localhost:3010/v1/image/map/${lat},${long}/${zoom}`;
+      const fmtImageURL = `//10.0.1.220:3010/v1/image/map/${lat},${long}/${zoom}`; // We need to construct this url using what the server indicates is its remote IP
 
       //  Get the radar location:
       const radarLocation = "csg";
@@ -31,9 +31,9 @@ class Settings extends Component {
             <div className="container">
 
               <div className="columns">
-                <div className="column is-narrow">
+                <div className="column is-narrow is-hidden-mobile">
                   <QRCode
-                    value={"http://localhost:3005/settings/"}
+                    value={"http://10.0.1.220:3005/settings"}
                     size={60}
                     bgColor={'transparent'}
                     fgColor={"#363636"}
@@ -44,7 +44,7 @@ class Settings extends Component {
                 </div>
                 <div className="column settingsTitle">
                   <h1 className="title">Daydash settings</h1>
-                  <h2 className="subtitle">Use the QR code to access remotely</h2>
+                  <h2 className="subtitle is-hidden-mobile">Use the QR code to access remotely</h2>
                 </div>
               </div>                 
 
