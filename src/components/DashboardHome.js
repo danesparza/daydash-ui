@@ -25,6 +25,7 @@ import WeatherAPI from '../api/weather.api';
 import CalendarAPI from '../api/calendar.api';
 import QuakeAPI from '../api/quake.api';
 import NWSAlertsAPI from '../api/nwsalerts.api';
+import SystemStore from '../stores/SystemStore';
 
 class DashboardHome extends Component {
 
@@ -37,8 +38,11 @@ class DashboardHome extends Component {
         weather: WeatherStore.GetWeather(),
         calendar: CalendarStore.GetCalendarEvents(),
         quakes: QuakeStore.GetQuakes(),
-        alerts: NWSAlertsStore.GetAlerts()
+        alerts: NWSAlertsStore.GetAlerts(),
+        endpoints: SystemStore.GetEndpoints()
     };
+
+    this.socketSet = false;    
   }
 
   _onChange = () => {
@@ -48,11 +52,32 @@ class DashboardHome extends Component {
         weather: WeatherStore.GetWeather(),
         calendar: CalendarStore.GetCalendarEvents(),
         quakes: QuakeStore.GetQuakes(),
-        alerts: NWSAlertsStore.GetAlerts()
+        alerts: NWSAlertsStore.GetAlerts(),
+        endpoints: SystemStore.GetEndpoints()
     });
+
+    //  Check to see if 
+    //  - the system information is available 
+    //  and 
+    //  - the socket hasn't been set already
+    if(this.socketSet === false && this.state.endpoints.service !== "") {
+      
+      //  Format the socket url:
+      const socketUrl = `ws://${this.state.endpoints.service}/v1/ws`;
+
+      // Create WebSocket connection (for config updates).      
+      this.socket = new WebSocket(socketUrl);
+      this.socketSet = true;
+
+      //  Add our socket listener
+      this.socket.addEventListener('message', this._onSocket);
+      console.log("Added config websocket listener");
+    }
+
   }
 
   _onSocket = (e) => {
+    //  Right now, when we get something from the socket, just emit it
     console.log(e);
   }
 
@@ -67,6 +92,7 @@ class DashboardHome extends Component {
     this.calendarListener = CalendarStore.addListener(this._onChange);
     this.quakeListener = QuakeStore.addListener(this._onChange);
     this.alertsListener = NWSAlertsStore.addListener(this._onChange);
+    this.systemListener = SystemStore.addListener(this._onChange);
   }  
 
   componentWillUnmount() {
@@ -80,6 +106,7 @@ class DashboardHome extends Component {
     this.calendarListener.remove();
     this.quakeListener.remove();
     this.alertsListener.remove();
+    this.systemListener.remove();
   }
 
   tick = () => {

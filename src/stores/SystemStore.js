@@ -2,28 +2,28 @@ import {Store} from 'flux/utils';
 import AppDispatcher from '../dispatcher/AppDispatcher';
 import DashboardConstants from '../actions/DashboardConstants';
 
-class PollenStore extends Store {
+class SystemStore extends Store {
 
     constructor(){
       super(AppDispatcher);
   
       //  Set initial expected state
-      this.pollendata = {};
-      this.pollendata.data = [];
-      this.pollendata.predominant_pollen = "...";
+      this.endpoints = {};
+      this.endpoints.service = "";
+      this.endpoints.ui = "";
     }
 
-    GetPollen() {
-      return this.pollendata;
+    GetEndpoints() {
+      return this.endpoints;
     }
 
     __onDispatch(action) {
     
         switch(action.actionType) {          
     
-          case DashboardConstants.RECEIVE_RAW_POLLEN:
-            console.log('Updating pollen store: ', action);
-            this.pollendata = action.data;
+          case DashboardConstants.RECEIVE_SYSTEM_ENDPOINT:
+            console.log('Updating system store: ', action);
+            this.endpoints = action.data;
             this.__emitChange();
             break;
     
@@ -34,4 +34,4 @@ class PollenStore extends Store {
 
 }
 
-export default new PollenStore();
+export default new SystemStore();

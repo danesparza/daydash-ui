@@ -20,7 +20,7 @@ class NWSAlertsStore extends Store {
     
         switch(action.actionType) {          
     
-          case DashboardConstants.RECIEVE_RAW_WEATHERALERTS:
+          case DashboardConstants.RECEIVE_RAW_WEATHERALERTS:
             console.log('Updating NWS alerts store: ', action);
             this.alertsdata = action.data;
             this.__emitChange();

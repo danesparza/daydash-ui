@@ -1,10 +1,10 @@
-import WeatherActions from "../actions/WeatherActions";
+import SystemActions from "../actions/SystemActions";
 
 class SystemAPI {
 
 
     /* Get endpoints for the current daydash system */
-    getSystemEndpoints(lat, long) {
+    getSystemEndpoints() {
         let url = "//localhost:3010/v1/system/endpoints";
 
         let apiHeaders = new Headers({
@@ -26,7 +26,7 @@ class SystemAPI {
                 // Receive data
                 response.json().then(function (data) {
                     //  Call the action to receive the data:
-                    WeatherActions.recieveWeatherData(data, lat, long);
+                    SystemActions.recieveEndpointData(data);
                 });
             }
             )

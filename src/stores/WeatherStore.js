@@ -29,7 +29,7 @@ class WeatherStore extends Store {
     
         switch(action.actionType) {          
     
-          case DashboardConstants.RECIEVE_RAW_WEATHER:
+          case DashboardConstants.RECEIVE_RAW_WEATHER:
             console.log('Updating weather store: ', action);
             this.weatherdata = action.data;
             this.__emitChange();

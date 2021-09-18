@@ -5,7 +5,7 @@ class WeatherActions {
     
     recieveWeatherData(weatherData, lat, long) {
         AppDispatcher.dispatch({
-            actionType: DashboardConstants.RECIEVE_RAW_WEATHER,
+            actionType: DashboardConstants.RECEIVE_RAW_WEATHER,
             data: weatherData.data,
             lat: lat,
             long: long

@@ -5,7 +5,7 @@ class NWSAlertsActions {
     
     recieveAlertsData(alertsData, lat, long) {
         AppDispatcher.dispatch({
-            actionType: DashboardConstants.RECIEVE_RAW_WEATHERALERTS,
+            actionType: DashboardConstants.RECEIVE_RAW_WEATHERALERTS,
             data: alertsData.data,
             lat: lat,
             long: long

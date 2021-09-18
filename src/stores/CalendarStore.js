@@ -20,7 +20,7 @@ class CalendarStore extends Store {
     
         switch(action.actionType) {          
     
-          case DashboardConstants.RECIEVE_RAW_CALENDAR_EVENTS:
+          case DashboardConstants.RECEIVE_RAW_CALENDAR_EVENTS:
             console.log('Updating calendar store: ', action);
             this.calendardata = action.data;
             this.__emitChange();

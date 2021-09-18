@@ -5,7 +5,7 @@ class QuakeActions {
     
     recieveQuakeData(quakeData) {
         AppDispatcher.dispatch({
-            actionType: DashboardConstants.RECIEVE_QUAKE_INFO,
+            actionType: DashboardConstants.RECEIVE_QUAKE_INFO,
             data: quakeData.data
         });
     }

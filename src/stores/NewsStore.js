@@ -19,7 +19,7 @@ class NewsStore extends Store {
     
         switch(action.actionType) {          
     
-          case DashboardConstants.RECIEVE_RAW_NEWS_EVENTS:
+          case DashboardConstants.RECEIVE_RAW_NEWS_EVENTS:
             console.log('Updating news store: ', action);
             this.newsdata = action.data;
             this.__emitChange();

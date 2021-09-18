@@ -5,6 +5,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 
 //  API imports
+import SystemAPI from './api/system.api';
 import PollenAPI from './api/pollen.api';
 import NewsAPI from './api/news.api';
 import WeatherAPI from './api/weather.api';
@@ -13,6 +14,7 @@ import QuakeAPI from './api/quake.api';
 import NWSAlertsAPI from './api/nwsalerts.api';
 
 //  Kick off API initialization
+SystemAPI.getSystemEndpoints();
 PollenAPI.getPollen("30019"); //  We could just let the API get this based on the stored zipcode
 NewsAPI.getNews();
 QuakeAPI.getQuakes();
@@ -32,8 +34,3 @@ ReactDOM.render(
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals(console.log);
 
-// Create WebSocket connection (for config updates).
-const socket = new WebSocket('ws://10.0.1.220:3010/v1/ws');
-socket.onmessage = (msg) => {
-  console.log(msg);
-}

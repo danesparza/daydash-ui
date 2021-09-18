@@ -5,7 +5,7 @@ class CalendarActions {
     
     recieveCalendarData(calData, calurl, caltimezone) {
         AppDispatcher.dispatch({
-            actionType: DashboardConstants.RECIEVE_RAW_CALENDAR_EVENTS,
+            actionType: DashboardConstants.RECEIVE_RAW_CALENDAR_EVENTS,
             data: calData.data,
             calurl: calurl,
             caltimezone: caltimezone

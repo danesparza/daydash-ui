@@ -19,7 +19,7 @@ class QuakeStore extends Store {
     
         switch(action.actionType) {          
     
-          case DashboardConstants.RECIEVE_QUAKE_INFO:
+          case DashboardConstants.RECEIVE_QUAKE_INFO:
             console.log('Updating quake store: ', action);
             this.quakedata = action.data;
             this.__emitChange();
