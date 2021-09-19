@@ -6,6 +6,7 @@ import reportWebVitals from './reportWebVitals';
 
 //  API imports
 import SystemAPI from './api/system.api';
+import ConfigAPI from './api/config.api';
 import PollenAPI from './api/pollen.api';
 import NewsAPI from './api/news.api';
 import WeatherAPI from './api/weather.api';
@@ -15,6 +16,7 @@ import NWSAlertsAPI from './api/nwsalerts.api';
 
 //  Kick off API initialization
 SystemAPI.getSystemEndpoints();
+ConfigAPI.getConfig();
 PollenAPI.getPollen("30019"); //  We could just let the API get this based on the stored zipcode
 NewsAPI.getNews();
 QuakeAPI.getQuakes();

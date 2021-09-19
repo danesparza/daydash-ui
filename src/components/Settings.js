@@ -1,11 +1,88 @@
 import React, { Component } from 'react';
 import QRCode from 'qrcode.react'; // Used in the weather notification.  We can move that to its own component
 
+//  Stores
+import SystemStore from '../stores/SystemStore';
+import ConfigStore from '../stores/ConfigStore';
+
 //  Styles and icons
 import '../App.css';
 import 'weathericons/css/weather-icons.css';
 
 class Settings extends Component {
+
+  constructor(props) {
+      super(props);
+
+      this.state = {          
+          endpoints: SystemStore.GetEndpoints(),
+          config: ConfigStore.GetAllConfigs(),
+          zipcode: ConfigStore.GetZipcode()
+          /* 
+          Initially, these come from config.
+          When a user interacts with the zipcode field and has the 'get location from zipcode' option selected,
+          the location needs to be updated.  It will look something like this:
+
+          zipcode (onchange) -> api call (new zipcode) -> action -> settings page store -> this page (with its own listener for settings page store changes)
+
+          latitude: ConfigStore.GetLatitude(),
+          longitude: ConfigStore.GetLongitude(),
+          */
+      };
+
+    }
+
+    _onChange = () => {
+      this.setState({          
+          endpoints: SystemStore.GetEndpoints(),
+          config: ConfigStore.GetAllConfigs(),
+          zipcode: ConfigStore.GetZipcode()
+      });
+    }
+
+    componentDidMount() {          
+      this.systemListener = SystemStore.addListener(this._onChange);
+      this.configListener = ConfigStore.addListener(this._onChange);
+    }  
+  
+    componentWillUnmount() {      
+      this.systemListener.remove();
+      this.configListener.remove();
+    }
+
+    //  A generic change handler, if you need it
+    _handleInputChange = (event) => {
+      const target = event.target;
+      const value = target.type === 'checkbox' ? target.checked : target.value;
+      const name = target.name;
+      this.setState({
+        [name]: value    
+      });
+    }
+
+    //  Change handler for zipcode.  Refreshes the map if there are exactly 5 digits entered
+    _zipChange = (event) => {
+      const target = event.target;
+
+      //  Update the local state
+      this.setState({
+        zipcode : target.value
+      });
+
+      //  Update the coordinates:
+
+    }
+
+    //  Form save
+    _saveConfig = (e) => {
+      e.preventDefault();    
+      console.log('You clicked submit.');
+
+      //  Create a set of config objects
+
+      //  Call the REST method to save them
+
+    }
 
     render() {
 
@@ -13,7 +90,7 @@ class Settings extends Component {
       const lat = "33.610739" /*props.item.geometry.coordinates[1]*/;
       const long = "-111.891472" /*props.item.geometry.coordinates[0]*/;
       const zoom = "11";
-      const fmtImageURL = `//10.0.1.220:3010/v1/image/map/${lat},${long}/${zoom}`; // We need to construct this url using what the server indicates is its remote IP
+      const fmtImageURL = `//${this.state.endpoints.service}/v1/image/map/${lat},${long}/${zoom}`; // We need to construct this url using what the server indicates is its remote IP
 
       //  Get the radar location:
       const radarLocation = "csg";
@@ -65,7 +142,7 @@ class Settings extends Component {
                 </ul>
               </div>
 
-              <form className="box">           
+              <form className="box" onSubmit={this._saveConfig}>           
 
                 <div className="columns">
                   
@@ -73,18 +150,29 @@ class Settings extends Component {
                     <h2 className="subtitle">Zipcode and location</h2>         
                     <p className="content">We use your <strong>zipcode</strong> to get up-to-date pollen information.  You can also use it to look up your <strong>location</strong>, below.</p>
 
+                    
                     <div className="field">
-                      <label className="label">Zipcode</label>
+                      <label className="label">Zipcode</label>  
                       <div className="control">
-                        <input className="input" type="text" placeholder="Enter ZIP code"/>
+                        <input className="input" name="zipcode" value={this.state.zipcode} type="text" placeholder="Enter ZIP code" onChange={this._handleInputChange}/>                        
                       </div>
                     </div>               
 
-                    <p className="content">We use your <strong>location</strong> to get local weather and wweather alerts information.</p>
-                    <div className="field">
-                      <label className="label">Location (as lat,long)</label>
+                    <p className="content">We use your <strong>location</strong> to get local weather and weather alerts information.</p>
+                    
+                    <div className="control">
+                      <label className="radio">
+                        <input type="radio" name="zipforlocation" value="true" defaultChecked="true" onChange={this._handleInputChange} /> Use zipcode for location
+                      </label>
+                      <label className="radio">
+                        <input type="radio" name="zipforlocation" value="false" onChange={this._handleInputChange} /> Enter custom location
+                      </label>
+                    </div>
+
+                    <div className="field mt-4">
+                      <label className="label">Location</label>
                       <div className="control">
-                        <input className="input" type="text" placeholder="Enter lat,long"/>
+                        <input className="input" type="text" placeholder="latitude,longitude" disabled/>
                       </div>
                     </div>
                     
@@ -178,7 +266,7 @@ class Settings extends Component {
                   </div>
                 </div>
 
-                <button className="button is-primary">Save</button>
+                <button className="button is-primary" type="submit">Save</button>
               </form>
 
             </div>

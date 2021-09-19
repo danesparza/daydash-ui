@@ -11,6 +11,7 @@ import NewsBox from './news/NewsBox';
 import CalendarBox from './calendar/CalendarBox';
 
 //  Stores
+import SystemStore from '../stores/SystemStore';
 import PollenStore from '../stores/PollenStore';
 import NewsStore from '../stores/NewsStore';
 import WeatherStore from '../stores/WeatherStore';
@@ -25,7 +26,7 @@ import WeatherAPI from '../api/weather.api';
 import CalendarAPI from '../api/calendar.api';
 import QuakeAPI from '../api/quake.api';
 import NWSAlertsAPI from '../api/nwsalerts.api';
-import SystemStore from '../stores/SystemStore';
+
 
 class DashboardHome extends Component {
 
