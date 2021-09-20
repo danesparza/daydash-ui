@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import QRCode from 'qrcode.react'; // Used in the weather notification.  We can move that to its own component
+import ZipToGeo from '../utility/ziptogeo';
 
 //  Stores
 import SystemStore from '../stores/SystemStore';
@@ -17,17 +18,11 @@ class Settings extends Component {
       this.state = {          
           endpoints: SystemStore.GetEndpoints(),
           config: ConfigStore.GetAllConfigs(),
-          zipcode: ConfigStore.GetZipcode()
-          /* 
-          Initially, these come from config.
-          When a user interacts with the zipcode field and has the 'get location from zipcode' option selected,
-          the location needs to be updated.  It will look something like this:
-
-          zipcode (onchange) -> api call (new zipcode) -> action -> settings page store -> this page (with its own listener for settings page store changes)
-
+          zipcode: ConfigStore.GetZipcode(),
+          zipforlocation: "true",
           latitude: ConfigStore.GetLatitude(),
           longitude: ConfigStore.GetLongitude(),
-          */
+          radarLocation: ConfigStore.GetRadarLocation()          
       };
 
     }
@@ -36,7 +31,10 @@ class Settings extends Component {
       this.setState({          
           endpoints: SystemStore.GetEndpoints(),
           config: ConfigStore.GetAllConfigs(),
-          zipcode: ConfigStore.GetZipcode()
+          zipcode: ConfigStore.GetZipcode(),
+          latitude: ConfigStore.GetLatitude(),
+          longitude: ConfigStore.GetLongitude(),
+          radarLocation: ConfigStore.GetRadarLocation()
       });
     }
 
@@ -69,7 +67,19 @@ class Settings extends Component {
         zipcode : target.value
       });
 
-      //  Update the coordinates:
+      //  Update the coordinates if we have a 5 digit zip and we're using zip for location:      
+      if(target.value.length === 5 && this.state.zipforlocation === "true"){
+        try {
+          let lat, long;
+          ({lat, long} =  ZipToGeo(target.value));
+
+          //  Update the state for latitude and longitude here (the map should redraw)
+          this.setState({
+            latitude : lat,
+            longitude: long
+          });
+        } catch {}                
+      }                  
 
     }
 
@@ -87,20 +97,18 @@ class Settings extends Component {
     render() {
 
       //  Format the item image url:
-      const lat = "33.610739" /*props.item.geometry.coordinates[1]*/;
-      const long = "-111.891472" /*props.item.geometry.coordinates[0]*/;
       const zoom = "11";
-      const fmtImageURL = `//${this.state.endpoints.service}/v1/image/map/${lat},${long}/${zoom}`; // We need to construct this url using what the server indicates is its remote IP
-
-      //  Get the radar location:
-      const radarLocation = "csg";
+      const fmtImageURL = `//${this.state.endpoints.service}/v1/image/map/${this.state.latitude},${this.state.longitude}/${zoom}`; // We need to construct this url using what the server indicates is its remote IP
 
       //  Format the url
-      const imageHash0 = new Date().toLocaleDateString("en-US", {day: 'numeric'});
-      const imageHash1 = new Date().toLocaleTimeString("en-US", {hour12 : false, hour:  "numeric" });
-      const imageHash2 = new Date().toLocaleTimeString("en-US", {hour12 : false, minute: "numeric" });
-      const imageHash = imageHash0 + "" + imageHash1 + "" + imageHash2.substring(0, imageHash2.length -1); // We're doing this to force no image caching -- time boxed to 10 minutes
-      const radarUrl = `https://s.w-x.co/staticmaps/wu/wxtype/county_loc/${radarLocation}/animate.png?${imageHash}`
+      let radarUrl = `https://s.w-x.co/staticmaps/wu/wxtype/county_loc/${this.state.radarLocation}/animate.png`;
+      if(this.state.radarLocation === "usa") {
+        //  The 'USA' url gets formatted differently
+        radarUrl = "https://s.w-x.co/staticmaps/wu/wxtype/none/usa/animate.png";
+      }
+
+      //  Format the location:
+      const fmtLocation = `${this.state.latitude},${this.state.longitude}`;
 
       return (
         <div className="App">
@@ -154,7 +162,7 @@ class Settings extends Component {
                     <div className="field">
                       <label className="label">Zipcode</label>  
                       <div className="control">
-                        <input className="input" name="zipcode" value={this.state.zipcode} type="text" placeholder="Enter ZIP code" onChange={this._handleInputChange}/>                        
+                        <input className="input" name="zipcode" value={this.state.zipcode} type="text" placeholder="Enter ZIP code" onChange={this._zipChange}/>                        
                       </div>
                     </div>               
 
@@ -172,7 +180,7 @@ class Settings extends Component {
                     <div className="field mt-4">
                       <label className="label">Location</label>
                       <div className="control">
-                        <input className="input" type="text" placeholder="latitude,longitude" disabled/>
+                        <input className="input" type="text" placeholder="latitude,longitude" value={fmtLocation} disabled/>
                       </div>
                     </div>
                     
@@ -207,52 +215,52 @@ class Settings extends Component {
                       <div className="control">
                         <div className="select">
 
-                          <select id="radarStation">
+                          <select id="radarLocation" name="radarLocation" value={this.state.radarLocation} onChange={this._handleInputChange}>
                             
-                            <option value="usa" selected="selected">United States</option>
+                            <option value="usa">All United States</option>
                             
-                            <option value="prc" selected="">AZ - Prescott </option>
-                            <option value="lit" selected="">AR - Little Rock </option>
-                            <option value="bfl" selected="">CA - Bakersfield </option>
-                            <option value="den" selected="">CO - Denver </option>
-                            <option value="hfd" selected="">CT - Hartford </option>
-                            <option value="eyw" selected="">FL - Key West </option>
-                            <option value="pie" selected="">FL - Saint Petersburg</option>
+                            <option value="prc">AZ - Prescott </option>
+                            <option value="lit">AR - Little Rock </option>
+                            <option value="bfl">CA - Bakersfield </option>
+                            <option value="den">CO - Denver </option>
+                            <option value="hfd">CT - Hartford </option>
+                            <option value="eyw">FL - Key West </option>
+                            <option value="pie">FL - Saint Petersburg</option>
 
-                            <option value="csg" selected="">GA - Columbus </option>
-                            <option value="dsm" selected="">IA - Des Moines </option>
-                            <option value="myl" selected="">ID - McCall </option>
-                            <option value="spi" selected="">IL - Springfield </option>
-                            <option value="sln" selected="">KS - Salina </option>
-                            <option value="bwg" selected="">KY - Bowling Green </option>
-                            <option value="msy" selected="">LA - New Orleans </option>
+                            <option value="csg">GA - Columbus </option>
+                            <option value="dsm">IA - Des Moines </option>
+                            <option value="myl">ID - McCall </option>
+                            <option value="spi">IL - Springfield </option>
+                            <option value="sln">KS - Salina </option>
+                            <option value="bwg">KY - Bowling Green </option>
+                            <option value="msy">LA - New Orleans </option>
 
-                            <option value="cad" selected="">MI - Cadillac </option>
-                            <option value="jef" selected="">MO - Jefferson City </option>
-                            <option value="stc" selected="">MN - Saint Cloud </option>
-                            <option value="tvr" selected="">MS - Vicksburg </option>
-                            <option value="lwt" selected="">MT - Lewistown </option>
+                            <option value="cad">MI - Cadillac </option>
+                            <option value="jef">MO - Jefferson City </option>
+                            <option value="stc">MN - Saint Cloud </option>
+                            <option value="tvr">MS - Vicksburg </option>
+                            <option value="lwt">MT - Lewistown </option>
 
-                            <option value="clt" selected="">NC - Charlotte </option>
-                            <option value="bis" selected="">ND - Bismarck </option>
-                            <option value="lbf" selected="">NE - North Platte </option>
-                            <option value="bml" selected="">NH - Berlin </option>
-                            <option value="row" selected="">NM - Roswell </option>
-                            <option value="rno" selected="">NV - Reno </option>
-                            <option value="bgm" selected="">NY - Binghamton </option>  
+                            <option value="clt">NC - Charlotte </option>
+                            <option value="bis">ND - Bismarck </option>
+                            <option value="lbf">NE - North Platte </option>
+                            <option value="bml">NH - Berlin </option>
+                            <option value="row">NM - Roswell </option>
+                            <option value="rno">NV - Reno </option>
+                            <option value="bgm">NY - Binghamton </option>  
 
-                            <option value="day" selected="">OH - Dayton </option>
-                            <option value="law" selected="">OK - Lawton </option>
-                            <option value="rdm" selected="">OR - Redmond </option>
-                            <option value="pir" selected="">SD - Pierre </option>
-                            <option value="bro" selected="">TX - Brownsville </option>                                                
-                            <option value="sat" selected="">TX - San Antonio </option>
+                            <option value="day">OH - Dayton </option>
+                            <option value="law">OK - Lawton </option>
+                            <option value="rdm">OR - Redmond </option>
+                            <option value="pir">SD - Pierre </option>
+                            <option value="bro">TX - Brownsville </option>                                                
+                            <option value="sat">TX - San Antonio </option>
 
-                            <option value="pvu" selected="">UT - Provo </option>
-                            <option value="fcx" selected="">VA - Roanoke </option>                        
-                            <option value="shd" selected="">VA - Staunton </option>
-                            <option value="tiw" selected="">WA - Tacoma </option>
-                            <option value="riw" selected="">WY - Riverton </option>
+                            <option value="pvu">UT - Provo </option>
+                            <option value="fcx">VA - Roanoke </option>                        
+                            <option value="shd">VA - Staunton </option>
+                            <option value="tiw">WA - Tacoma </option>
+                            <option value="riw">WY - Riverton </option>
                             
                           </select>
                         </div>

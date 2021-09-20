@@ -30,6 +30,40 @@ class ConfigStore extends Store {
       return retval;
     }
 
+    GetLatitude() {
+      let retval = "";
+
+      try {
+        const foundItem = this.configdata.find(item => item.name === "location");
+        retval = foundItem.value.split(",")[0];
+      } catch {}
+
+      return retval;
+    }
+
+    GetLongitude() {
+      let retval = "";
+
+      try {
+        const foundItem = this.configdata.find(item => item.name === "location");
+        retval = foundItem.value.split(",")[1];
+      } catch {}
+
+      return retval;
+    }
+
+    GetRadarLocation() {
+      // Default to all of usa
+      let retval = "usa"; 
+
+      try {
+        const foundItem = this.configdata.find(item => item.name === "radarLocation");
+        retval = foundItem.value;
+      } catch {}
+
+      return retval;
+    }
+
     __onDispatch(action) {
     
         switch(action.actionType) {          
