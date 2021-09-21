@@ -5,7 +5,8 @@ class NWSAlertsAPI {
 
     /* Get weather alerts data for the given coordinates */
     getWeatherAlerts(lat, long) {
-        let url = "//localhost:3010/v1/dashboard/nwsalerts";
+        const hostname = window.location.hostname;
+        let url = `//${hostname}:3010/v1/dashboard/nwsalerts`;
 
         let apiHeaders = new Headers({
             "Content-Type": "application/json; charset=UTF-8",

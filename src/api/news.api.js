@@ -5,7 +5,8 @@ class NewsAPI {
 
     /* Get breaking news information */
     getNews() {
-        let url = "//localhost:3010/v1/dashboard/news";
+        const hostname = window.location.hostname;
+        let url = `//${hostname}:3010/v1/dashboard/news`;
 
         let apiHeaders = new Headers({
             "Content-Type": "application/json; charset=UTF-8",

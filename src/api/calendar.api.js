@@ -5,7 +5,8 @@ class CalendarAPI {
 
     /* Get calendar events for the given iCal file and timezone */
     getCalendarEvents(calurl, timezone) {
-        let url = "//localhost:3010/v1/dashboard/calendar";
+        const hostname = window.location.hostname;
+        let url = `//${hostname}:3010/v1/dashboard/calendar`;
 
         let apiHeaders = new Headers({
             "Content-Type": "application/json; charset=UTF-8",

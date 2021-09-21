@@ -5,7 +5,8 @@ class WeatherAPI {
 
     /* Get weather data for the given coordinates */
     getWeather(lat, long) {
-        let url = "//localhost:3010/v1/dashboard/weather";
+        const hostname = window.location.hostname;
+        let url = `//${hostname}:3010/v1/dashboard/weather`;
 
         let apiHeaders = new Headers({
             "Content-Type": "application/json; charset=UTF-8",

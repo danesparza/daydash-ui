@@ -6,7 +6,8 @@ class PollenAPI {
 
     /* Get pollen counts for the given zipcode */
     getPollen(zipcode) {
-        let url = "//localhost:3010/v1/dashboard/pollen";
+        const hostname = window.location.hostname;
+        let url = `//${hostname}:3010/v1/dashboard/pollen`;
 
         let apiHeaders = new Headers({
             "Content-Type": "application/json; charset=UTF-8",

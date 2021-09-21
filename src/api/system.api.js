@@ -5,7 +5,8 @@ class SystemAPI {
 
     /* Get endpoints for the current daydash system */
     getSystemEndpoints() {
-        let url = "//localhost:3010/v1/system/endpoints";
+        const hostname = window.location.hostname;
+        let url = `//${hostname}:3010/v1/system/endpoints`;
 
         let apiHeaders = new Headers({
             "Content-Type": "application/json; charset=UTF-8",

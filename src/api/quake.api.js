@@ -5,7 +5,8 @@ class QuakeAPI {
 
     /* Get earthquake information */
     getQuakes() {
-        let url = "//localhost:3010/v1/dashboard/earthquakes";
+        const hostname = window.location.hostname;
+        let url = `//${hostname}:3010/v1/dashboard/earthquakes`;
 
         let apiHeaders = new Headers({
             "Content-Type": "application/json; charset=UTF-8",
