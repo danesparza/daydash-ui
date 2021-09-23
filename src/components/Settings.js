@@ -156,6 +156,15 @@ class Settings extends Component {
 
     render() {
 
+      //  Loading placeholder:
+      if(!this.state.configLoaded){        
+        return(
+          <div className="settings">            
+              <div className="loading">Loading ...</div>              
+          </div>
+        );
+      }
+
       //  Format the item image url:
       const zoom = "11";
       const fmtImageURL = `//${this.state.endpoints.service}/v1/image/map/${this.state.location}/${zoom}`; 
@@ -168,10 +177,10 @@ class Settings extends Component {
       }
       
       //  Format the QR code link:
-      const remoteSettingsLink = `${this.state.endpoints.ui}settings`;
+      const remoteSettingsLink = `${this.state.endpoints.ui}settings`;      
 
       return (
-        <div className="App">
+        <div className="settings">
           <section className="section">
             <div className="container">
 

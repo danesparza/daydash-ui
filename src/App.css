@@ -18,6 +18,13 @@ form.box{
     flex: 1;
 }
 
+.settings{
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .currentTemp{
     font-size: 8vw;
 }
@@ -156,4 +163,8 @@ tbody.calendarBody{
 
 .settingsMapImage{
     border: 1px #121212 solid;
+}
+
+.loading{
+    max-width: 50%;
 }
