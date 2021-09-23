@@ -153,3 +153,7 @@ tbody.calendarBody{
 .settingsTitle{
     padding: .5rem;
 }
+
+.settingsMapImage{
+    border: 1px #121212 solid;
+}

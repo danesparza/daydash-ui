@@ -9,6 +9,8 @@ class CalendarStore extends Store {
   
       //  Set initial expected state
       this.calendardata = {};
+      this.loaded = false;
+      this.error = false;
       this.calendardata.items = [];      
     }
 
@@ -23,6 +25,7 @@ class CalendarStore extends Store {
           case DashboardConstants.RECEIVE_RAW_CALENDAR_EVENTS:
             console.log('Updating calendar store: ', action);
             this.calendardata = action.data;
+            this.loaded = true;
             this.__emitChange();
             break;
     

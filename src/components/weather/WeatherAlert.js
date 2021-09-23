@@ -2,12 +2,10 @@ import QRCode from 'qrcode.react';
 
 function WeatherAlert(props) {
 
-    const dtNow = new Date();
-
     let alertMessage = "";
     let showAlert = false;
 
-    const currentAlerts = props.alerts.alerts.filter(item => Date.parse(item.end) > dtNow); // Get alerts that end after right now
+    const currentAlerts = props.alerts.alerts; // Get alerts
     const alertUrl = props.alerts.alertsurl;
 
     if(currentAlerts.length > 0) 

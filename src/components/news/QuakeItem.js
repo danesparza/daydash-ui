@@ -10,12 +10,14 @@ function QuakeItem(props) {
     //  Format the item text
     const mag = props.item.properties.mag;
     const place = props.item.properties.place;
-    let fmtText = `Magnitude ${mag} earthquake near ${place} reported`; 
+    const fmtText = `Magnitude ${mag} earthquake ${place}`; 
     
     //  Format the item image url:
     const lat = props.item.geometry.coordinates[1];
     const long = props.item.geometry.coordinates[0];
-    const fmtImageURL = `http://localhost:3010/v1/image/map/${lat},${long}`;
+    const zoom = 5;
+    const hostname = window.location.hostname;
+    const fmtImageURL = `//${hostname}:3010/v1/image/map/${lat},${long}/${zoom}`;
 
     return (
         <div className="column">              

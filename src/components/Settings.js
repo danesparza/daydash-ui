@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import QRCode from 'qrcode.react'; // Used in the weather notification.  We can move that to its own component
 import ZipToGeo from '../utility/ziptogeo';
 
+//  APIs
+import ConfigAPI from '../api/config.api';
+
 //  Stores
 import SystemStore from '../stores/SystemStore';
 import ConfigStore from '../stores/ConfigStore';
@@ -17,24 +20,29 @@ class Settings extends Component {
 
       this.state = {          
           endpoints: SystemStore.GetEndpoints(),
-          config: ConfigStore.GetAllConfigs(),
-          zipcode: ConfigStore.GetZipcode(),
-          zipforlocation: "true",
-          latitude: ConfigStore.GetLatitude(),
-          longitude: ConfigStore.GetLongitude(),
-          radarLocation: ConfigStore.GetRadarLocation()          
+          config: ConfigStore.GetConfig(),
+          configLoaded: ConfigStore.HasLoaded(),
+          zipcode: ConfigStore.GetConfig().zipcode.toString(),
+          zipforlocation: ConfigStore.GetConfig().useZipcodeForLocation,
+          radarStation: ConfigStore.GetConfig().radarStation,
+          calendarUrl: ConfigStore.GetConfig().calendarUrl,
+          calendarTimezone: ConfigStore.GetConfig().calendarTimezone,
+          location: ConfigStore.GetConfig().location
       };
 
     }
 
     _onChange = () => {
       this.setState({          
-          endpoints: SystemStore.GetEndpoints(),
-          config: ConfigStore.GetAllConfigs(),
-          zipcode: ConfigStore.GetZipcode(),
-          latitude: ConfigStore.GetLatitude(),
-          longitude: ConfigStore.GetLongitude(),
-          radarLocation: ConfigStore.GetRadarLocation()
+        endpoints: SystemStore.GetEndpoints(),
+        config: ConfigStore.GetConfig(),
+        configLoaded: ConfigStore.HasLoaded(),
+        zipcode: ConfigStore.GetConfig().zipcode.toString(),
+        zipforlocation: ConfigStore.GetConfig().useZipcodeForLocation,
+        radarStation: ConfigStore.GetConfig().radarStation,
+        calendarUrl: ConfigStore.GetConfig().calendarUrl,
+        calendarTimezone: ConfigStore.GetConfig().calendarTimezone,
+        location: ConfigStore.GetConfig().location
       });
     }
 
@@ -61,54 +69,106 @@ class Settings extends Component {
     //  Change handler for zipcode.  Refreshes the map if there are exactly 5 digits entered
     _zipChange = (event) => {
       const target = event.target;
-
+      
       //  Update the local state
       this.setState({
         zipcode : target.value
       });
 
       //  Update the coordinates if we have a 5 digit zip and we're using zip for location:      
-      if(target.value.length === 5 && this.state.zipforlocation === "true"){
+      if(target.value.length === 5 && this.state.zipforlocation === true){
         try {
           let lat, long;
           ({lat, long} =  ZipToGeo(target.value));
 
           //  Update the state for latitude and longitude here (the map should redraw)
           this.setState({
-            latitude : lat,
-            longitude: long
+            location: `${lat},${long}`
           });
-        } catch {}                
+        } catch(err) {
+          console.log(err);
+        }                
       }                  
 
     }
 
+    //  Change handler for location
+    _locationChange = (event) => {
+      const target = event.target;
+
+      //  Format the value:
+      try {
+        let formattedLocation = target.value;
+
+        //  Update the local state
+        this.setState({
+          location : formattedLocation
+        });
+        
+      } catch {}            
+
+    }
+
+    _zipForLocationChange = (event) => {
+      const target = event.target;
+
+      //  Parse the value:
+      try {
+        const useZipForLocation = target.value ? (target.value.toLowerCase() == "true") : false;
+
+        //  Update the local state
+        this.setState({
+          zipforlocation : useZipForLocation
+        });
+        
+      } catch {}
+    }
+
     //  Form save
     _saveConfig = (e) => {
-      e.preventDefault();    
-      console.log('You clicked submit.');
+      e.preventDefault();
+
+      //  Validate the zip is numeric
+      const parsedZip = parseInt(this.state.zipcode.trim());
+      if(isNaN(parsedZip)) {
+        //  Display some error?
+        console.log("Entered zipcode is not a number");
+      }
+
+      //  Validate the location looks like it's correct (length > 3 and has a comma)
 
       //  Create a set of config objects
+      let config = {
+          zipcode: parsedZip,
+          useZipcodeForLocation: this.state.zipforlocation,
+          radarStation: this.state.radarStation,
+          location: this.state.location,
+          calendarUrl: this.state.calendarUrl,
+          calendarTimezone: this.state.calendarTimezone    
+      };
 
       //  Call the REST method to save them
+      ConfigAPI.saveConfig(config);
 
+      //  Redirect to the main dashboard?
+      
     }
 
     render() {
 
       //  Format the item image url:
       const zoom = "11";
-      const fmtImageURL = `//${this.state.endpoints.service}/v1/image/map/${this.state.latitude},${this.state.longitude}/${zoom}`; // We need to construct this url using what the server indicates is its remote IP
+      const fmtImageURL = `//${this.state.endpoints.service}/v1/image/map/${this.state.location}/${zoom}`; 
 
       //  Format the url
-      let radarUrl = `https://s.w-x.co/staticmaps/wu/wxtype/county_loc/${this.state.radarLocation}/animate.png`;
-      if(this.state.radarLocation === "usa") {
+      let radarUrl = `https://s.w-x.co/staticmaps/wu/wxtype/county_loc/${this.state.radarStation}/animate.png`;
+      if(this.state.radarStation === "usa") {
         //  The 'USA' url gets formatted differently
         radarUrl = "https://s.w-x.co/staticmaps/wu/wxtype/none/usa/animate.png";
       }
-
-      //  Format the location:
-      const fmtLocation = `${this.state.latitude},${this.state.longitude}`;
+      
+      //  Format the QR code link:
+      const remoteSettingsLink = `${this.state.endpoints.ui}settings`;
 
       return (
         <div className="App">
@@ -118,7 +178,7 @@ class Settings extends Component {
               <div className="columns">
                 <div className="column is-narrow is-hidden-mobile">
                   <QRCode
-                    value={"http://10.0.1.220:3005/settings"}
+                    value={remoteSettingsLink}
                     size={60}
                     bgColor={'transparent'}
                     fgColor={"#363636"}
@@ -170,17 +230,17 @@ class Settings extends Component {
                     
                     <div className="control">
                       <label className="radio">
-                        <input type="radio" name="zipforlocation" value="true" defaultChecked="true" onChange={this._handleInputChange} /> Use zipcode for location
+                        <input type="radio" name="zipforlocation" value="true" defaultChecked="true" onChange={this._zipForLocationChange} /> Use zipcode for location
                       </label>
                       <label className="radio">
-                        <input type="radio" name="zipforlocation" value="false" onChange={this._handleInputChange} /> Enter custom location
+                        <input type="radio" name="zipforlocation" value="false" onChange={this._zipForLocationChange} /> Enter custom location
                       </label>
                     </div>
 
                     <div className="field mt-4">
                       <label className="label">Location</label>
                       <div className="control">
-                        <input className="input" type="text" placeholder="latitude,longitude" value={fmtLocation} disabled/>
+                        <input className="input" type="text" placeholder="latitude,longitude" value={this.state.location} disabled={this.state.zipforlocation === "true" ? true : false} onChange={this._locationChange}/>
                       </div>
                     </div>
                     
@@ -188,17 +248,18 @@ class Settings extends Component {
 
                   <div className="column">
                     <p className="content">A map of the location you entered:</p>
-                    <img src={fmtImageURL} alt=""/>
+                    <img className="settingsMapImage" src={fmtImageURL} alt=""/>
                   </div>
 
                 </div>           
 
                 <hr />
                 <h2 className="subtitle">Calendar information</h2>
+                <p className="content">Your <strong>Calendar URL</strong> is used to show today's events from any calendar you choose.  Help getting this url from <a href="https://support.google.com/calendar/answer/37648?hl=en&ref_topic=10509542#zippy=%2Cget-your-calendar-view-only" target="_blank" rel="noreferrer">Google Calendar</a> or <a href="https://www.techrepublic.com/article/how-to-find-your-icloud-calendar-url/" target="_blank" rel="noreferrer">iCloud Calendar</a> or <a href="https://support.microsoft.com/en-us/office/share-your-calendar-in-outlook-on-the-web-7ecef8ae-139c-40d9-bae2-a23977ee58d5" target="_blank" rel="noreferrer">Outlook</a>.</p>
                 <div className="field">
                   <label className="label">Calendar URL</label>
                   <div className="control">
-                    <input className="input" type="text" placeholder="Enter calendar URL"/>
+                    <input className="input" name="calendarUrl" type="url" placeholder="Enter calendar URL" value={this.state.calendarUrl} onChange={this._handleInputChange} />
                   </div>
                 </div>
 
@@ -215,7 +276,7 @@ class Settings extends Component {
                       <div className="control">
                         <div className="select">
 
-                          <select id="radarLocation" name="radarLocation" value={this.state.radarLocation} onChange={this._handleInputChange}>
+                          <select id="radarStation" name="radarStation" value={this.state.radarStation} onChange={this._handleInputChange}>
                             
                             <option value="usa">All United States</option>
                             
@@ -270,7 +331,7 @@ class Settings extends Component {
 
                   <div className="column">
                     <p className="content">The current radar image for the selected radar station:</p>
-                    <img src={radarUrl} alt=""/>
+                    <img className="settingsMapImage" src={radarUrl} alt=""/>
                   </div>
                 </div>
 

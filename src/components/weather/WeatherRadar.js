@@ -2,14 +2,14 @@
 function WeatherRadar(props) {
 
     //  Get the radar location:
-    const radarLocation = "csg";
+    const radarStation = "csg";
 
     //  Format the url
     const imageHash0 = new Date().toLocaleDateString("en-US", {day: 'numeric'});
     const imageHash1 = new Date().toLocaleTimeString("en-US", {hour12 : false, hour:  "numeric" });
     const imageHash2 = new Date().toLocaleTimeString("en-US", {hour12 : false, minute: "numeric" });
     const imageHash = imageHash0 + "" + imageHash1 + "" + imageHash2.substring(0, imageHash2.length -1); // We're doing this to force no image caching -- time boxed to 10 minutes
-    const radarUrl = `https://s.w-x.co/staticmaps/wu/wxtype/county_loc/${radarLocation}/animate.png?${imageHash}`
+    const radarUrl = `https://s.w-x.co/staticmaps/wu/wxtype/county_loc/${radarStation}/animate.png?${imageHash}`
     
     //  If we have a chance of rain > 10% in the next two hours, show the radar image.  Otherwise, show nothing
     let radarImage = "";
