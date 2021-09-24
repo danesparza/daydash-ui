@@ -3,12 +3,10 @@ import DashboardConstants from './DashboardConstants';
 
 class CalendarActions {
     
-    recieveCalendarData(calData, calurl, caltimezone) {
+    recieveCalendarData(calData) {
         AppDispatcher.dispatch({
             actionType: DashboardConstants.RECEIVE_RAW_CALENDAR_EVENTS,
-            data: calData.data,
-            calurl: calurl,
-            caltimezone: caltimezone
+            data: calData.data
         });
     }
 }

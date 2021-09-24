@@ -3,12 +3,10 @@ import DashboardConstants from './DashboardConstants';
 
 class NWSAlertsActions {
     
-    recieveAlertsData(alertsData, lat, long) {
+    recieveAlertsData(alertsData) {
         AppDispatcher.dispatch({
             actionType: DashboardConstants.RECEIVE_RAW_WEATHERALERTS,
-            data: alertsData.data,
-            lat: lat,
-            long: long
+            data: alertsData.data
         });
     }
 }

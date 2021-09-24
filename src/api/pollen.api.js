@@ -4,8 +4,8 @@ import PollenActions from "../actions/PollenActions";
 class PollenAPI {
 
 
-    /* Get pollen counts for the given zipcode */
-    getPollen(zipcode) {
+    /* Get pollen counts for the configured zipcode */
+    getPollen() {
         const hostname = window.location.hostname;
         let url = `//${hostname}:3010/v1/dashboard/pollen`;
 
@@ -13,14 +13,10 @@ class PollenAPI {
             "Content-Type": "application/json; charset=UTF-8",
         });
 
-        let params = {};
-        params.zipcode = zipcode;
-
         fetch(url, {
                 mode: 'cors',
-                method: 'post',
-                headers: apiHeaders,
-                body: JSON.stringify(params)
+                method: 'get',
+                headers: apiHeaders
             })
             .then(
             function (response) {
@@ -32,7 +28,7 @@ class PollenAPI {
                 // Receive data
                 response.json().then(function (data) {
                     //  Call the action to receive the data:
-                    PollenActions.recievePollenData(data, zipcode);
+                    PollenActions.recievePollenData(data);
                 });
             }
             )

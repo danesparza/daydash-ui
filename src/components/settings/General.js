@@ -1,19 +1,18 @@
 import React, { Component } from 'react';
 import QRCode from 'qrcode.react'; // Used in the weather notification.  We can move that to its own component
-import ZipToGeo from '../utility/ziptogeo';
+import ZipToGeo from '../../utility/ziptogeo';
 
 //  APIs
-import ConfigAPI from '../api/config.api';
+import ConfigAPI from '../../api/config.api';
 
 //  Stores
-import SystemStore from '../stores/SystemStore';
-import ConfigStore from '../stores/ConfigStore';
+import SystemStore from '../../stores/SystemStore';
+import ConfigStore from '../../stores/ConfigStore';
 
 //  Styles and icons
-import '../App.css';
 import 'weathericons/css/weather-icons.css';
 
-class Settings extends Component {
+class GeneralSettings extends Component {
 
   constructor(props) {
       super(props);
@@ -159,8 +158,23 @@ class Settings extends Component {
       //  Loading placeholder:
       if(!this.state.configLoaded){        
         return(
-          <div className="settings">            
-              <div className="loading">Loading ...</div>              
+          <div className="loadContainer">            
+              <div className="loading">
+              
+              <div className="sk-grid">
+                <div className="sk-grid-cube"></div>
+                <div className="sk-grid-cube"></div>
+                <div className="sk-grid-cube"></div>
+                <div className="sk-grid-cube"></div>
+                <div className="sk-grid-cube"></div>
+                <div className="sk-grid-cube"></div>
+                <div className="sk-grid-cube"></div>
+                <div className="sk-grid-cube"></div>
+                <div className="sk-grid-cube"></div>
+              </div>
+
+              
+              </div>              
           </div>
         );
       }
@@ -205,13 +219,13 @@ class Settings extends Component {
               <div className="tabs is-boxed is-medium">
                 <ul>
                   <li className="is-active">
-                    <a>
+                    <a href="/settings">
                       <span className="icon is-small"><i className="fas fa-tools" aria-hidden="true"></i></span>
                       <span>General</span>
                     </a>
                   </li>
                   <li>
-                    <a>
+                    <a href="/network">
                       <span className="icon is-small"><i className="fas fa-wifi" aria-hidden="true"></i></span>
                       <span>Network</span>
                     </a>
@@ -354,4 +368,4 @@ class Settings extends Component {
     }
 }
 
-export default Settings;
+export default GeneralSettings;

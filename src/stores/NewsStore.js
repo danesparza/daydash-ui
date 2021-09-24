@@ -9,6 +9,16 @@ class NewsStore extends Store {
   
       this.newsdata = {};
       this.newsdata.items = [];
+      this.loaded = false;
+      this.error = false;
+    }
+
+    HasLoaded() {
+      return this.loaded;
+    }
+
+    HasError() {
+      return this.error;
     }
 
     GetNews() {
@@ -22,6 +32,7 @@ class NewsStore extends Store {
           case DashboardConstants.RECEIVE_RAW_NEWS_EVENTS:
             console.log('Updating news store: ', action);
             this.newsdata = action.data;
+            this.loaded = true;
             this.__emitChange();
             break;
     

@@ -19,6 +19,16 @@ class WeatherStore extends Store {
       this.weatherdata.daily = {};
       this.weatherdata.daily.data = [];
       this.weatherdata.hourly = [];
+      this.loaded = false;
+      this.error = false;
+    }
+
+    HasLoaded() {
+      return this.loaded;
+    }
+
+    HasError() {
+      return this.error;
     }
 
     GetWeather() {
@@ -32,6 +42,7 @@ class WeatherStore extends Store {
           case DashboardConstants.RECEIVE_RAW_WEATHER:
             console.log('Updating weather store: ', action);
             this.weatherdata = action.data;
+            this.loaded = true;
             this.__emitChange();
             break;
     

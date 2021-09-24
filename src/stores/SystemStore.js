@@ -11,6 +11,16 @@ class SystemStore extends Store {
       this.endpoints = {};
       this.endpoints.service = "";
       this.endpoints.ui = "";
+      this.loaded = false;
+      this.error = false;
+    }
+
+    HasLoaded() {
+      return this.loaded;
+    }
+
+    HasError() {
+      return this.error;
     }
 
     GetEndpoints() {
@@ -24,6 +34,7 @@ class SystemStore extends Store {
           case DashboardConstants.RECEIVE_SYSTEM_ENDPOINT:
             console.log('Updating system store: ', action);
             this.endpoints = action.data;
+            this.loaded = true;
             this.__emitChange();
             break;
     

@@ -3,18 +3,21 @@ import React from 'react';
 import {useRoutes} from 'hookrouter';
 import DashboardHome from './components/DashboardHome';
 import NotFound from './components/NotFound';
-import Settings from './components/Settings';
+import GeneralSettings from './components/settings/General';
+import NetworkSettings from './components/settings/Network';
 
 //  Global Styles
 import 'weathericons/css/weather-icons.css';
 import '@fortawesome/fontawesome-free/css/all.min.css'
 import './App.css';
+import 'spinkit/spinkit.min.css';
 import NavBar from './components/common/NavBar';
 
 //  Our routes
 const routes = {
   '/': () => <DashboardHome />,
-  '/settings': () => <Settings />  
+  '/settings': () => <GeneralSettings />,
+  '/network': () => <NetworkSettings />  
 };
 
 const App = () => {

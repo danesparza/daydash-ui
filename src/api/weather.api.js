@@ -3,8 +3,8 @@ import WeatherActions from "../actions/WeatherActions";
 class WeatherAPI {
 
 
-    /* Get weather data for the given coordinates */
-    getWeather(lat, long) {
+    /* Get weather data for the configured coordinates */
+    getWeather() {
         const hostname = window.location.hostname;
         let url = `//${hostname}:3010/v1/dashboard/weather`;
 
@@ -12,15 +12,10 @@ class WeatherAPI {
             "Content-Type": "application/json; charset=UTF-8",
         });
 
-        let params = {};
-        params.lat = lat;
-        params.long = long;
-
         fetch(url, {
                 mode: 'cors',
-                method: 'post',
-                headers: apiHeaders,
-                body: JSON.stringify(params)
+                method: 'get',
+                headers: apiHeaders
             })
             .then(
             function (response) {
@@ -32,7 +27,7 @@ class WeatherAPI {
                 // Receive data
                 response.json().then(function (data) {
                     //  Call the action to receive the data:
-                    WeatherActions.recieveWeatherData(data, lat, long);
+                    WeatherActions.recieveWeatherData(data);
                 });
             }
             )

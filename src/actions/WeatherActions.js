@@ -3,12 +3,10 @@ import DashboardConstants from './DashboardConstants';
 
 class WeatherActions {
     
-    recieveWeatherData(weatherData, lat, long) {
+    recieveWeatherData(weatherData) {
         AppDispatcher.dispatch({
             actionType: DashboardConstants.RECEIVE_RAW_WEATHER,
-            data: weatherData.data,
-            lat: lat,
-            long: long
+            data: weatherData.data
         });
     }
 }

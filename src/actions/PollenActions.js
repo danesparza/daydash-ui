@@ -3,11 +3,10 @@ import DashboardConstants from './DashboardConstants';
 
 class PollenActions {
     
-    recievePollenData(pollenData, zipcode) {
+    recievePollenData(pollenData) {
         AppDispatcher.dispatch({
             actionType: DashboardConstants.RECEIVE_RAW_POLLEN,
-            data: pollenData.data,
-            zipcode: zipcode
+            data: pollenData.data
         });
     }
 }

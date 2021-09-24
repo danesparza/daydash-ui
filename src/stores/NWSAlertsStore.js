@@ -9,7 +9,17 @@ class NWSAlertsStore extends Store {
   
       //  Set initial expected state
       this.alertsdata = {};
-      this.alertsdata.alerts = [];      
+      this.alertsdata.alerts = [];
+      this.loaded = false;
+      this.error = false;
+    }
+
+    HasLoaded() {
+      return this.loaded;
+    }
+
+    HasError() {
+      return this.error;
     }
 
     GetAlerts() {
@@ -23,6 +33,7 @@ class NWSAlertsStore extends Store {
           case DashboardConstants.RECEIVE_RAW_WEATHERALERTS:
             console.log('Updating NWS alerts store: ', action);
             this.alertsdata = action.data;
+            this.loaded = true;
             this.__emitChange();
             break;
     

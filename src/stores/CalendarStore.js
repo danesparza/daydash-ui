@@ -14,6 +14,14 @@ class CalendarStore extends Store {
       this.calendardata.items = [];      
     }
 
+    HasLoaded() {
+      return this.loaded;
+    }
+
+    HasError() {
+      return this.error;
+    }
+
     GetCalendarEvents() {
       return this.calendardata;
     }

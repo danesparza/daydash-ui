@@ -4,7 +4,7 @@ class CalendarAPI {
 
 
     /* Get calendar events for the given iCal file and timezone */
-    getCalendarEvents(calurl, timezone) {
+    getCalendarEvents() {
         const hostname = window.location.hostname;
         let url = `//${hostname}:3010/v1/dashboard/calendar`;
 
@@ -12,15 +12,10 @@ class CalendarAPI {
             "Content-Type": "application/json; charset=UTF-8",
         });
 
-        let params = {};
-        params.url = calurl;
-        params.timezone = timezone;
-
         fetch(url, {
                 mode: 'cors',
-                method: 'post',
-                headers: apiHeaders,
-                body: JSON.stringify(params)
+                method: 'get',
+                headers: apiHeaders
             })
             .then(
             function (response) {
@@ -32,7 +27,7 @@ class CalendarAPI {
                 // Receive data
                 response.json().then(function (data) {
                     //  Call the action to receive the data:
-                    CalendarActions.recieveCalendarData(data, calurl, timezone);
+                    CalendarActions.recieveCalendarData(data);
                 });
             }
             )

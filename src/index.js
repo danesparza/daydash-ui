@@ -17,12 +17,12 @@ import NWSAlertsAPI from './api/nwsalerts.api';
 //  Kick off API initialization
 SystemAPI.getSystemEndpoints();
 ConfigAPI.getConfig();
-PollenAPI.getPollen("30019"); //  We could just let the API get this based on the stored zipcode
+PollenAPI.getPollen();
 NewsAPI.getNews();
 QuakeAPI.getQuakes();
-WeatherAPI.getWeather("34.016410", "-83.906870"); //  We could just let the API get this based on the stored coordinates
-NWSAlertsAPI.getWeatherAlerts("34.016410", "-83.906870"); //  We could just let the API get this based on the stored coordinates
-CalendarAPI.getCalendarEvents("https://calendar.google.com/calendar/ical/mg8l31ag8ua059trmktgdq6v80%40group.calendar.google.com/private-342fffdc823bfcaea433775659169545/basic.ics", "America/New_York");
+WeatherAPI.getWeather();
+NWSAlertsAPI.getWeatherAlerts();
+CalendarAPI.getCalendarEvents();
 
 ReactDOM.render(
   <React.StrictMode>

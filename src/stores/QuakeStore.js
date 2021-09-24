@@ -9,6 +9,16 @@ class QuakeStore extends Store {
   
       this.quakedata = {};
       this.quakedata.features = [];
+      this.loaded = false;
+      this.error = false;
+    }
+
+    HasLoaded() {
+      return this.loaded;
+    }
+
+    HasError() {
+      return this.error;
     }
 
     GetQuakes() {
@@ -22,6 +32,7 @@ class QuakeStore extends Store {
           case DashboardConstants.RECEIVE_QUAKE_INFO:
             console.log('Updating quake store: ', action);
             this.quakedata = action.data;
+            this.loaded = true;
             this.__emitChange();
             break;
     

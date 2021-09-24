@@ -40,7 +40,14 @@ class DashboardHome extends Component {
         calendar: CalendarStore.GetCalendarEvents(),
         quakes: QuakeStore.GetQuakes(),
         alerts: NWSAlertsStore.GetAlerts(),
-        endpoints: SystemStore.GetEndpoints()
+        endpoints: SystemStore.GetEndpoints(),
+        pollenLoaded: PollenStore.HasLoaded(),
+        newsLoaded: NewsStore.HasLoaded(),
+        weatherLoaded: WeatherStore.HasLoaded(),
+        calendarLoaded: CalendarStore.HasLoaded(),
+        quakesLoaded: QuakeStore.HasLoaded(),
+        alertsLoaded: NWSAlertsStore.HasLoaded(),
+        systemLoaded: SystemStore.HasLoaded()
     };
 
     this.socketSet = false;    
@@ -54,7 +61,14 @@ class DashboardHome extends Component {
         calendar: CalendarStore.GetCalendarEvents(),
         quakes: QuakeStore.GetQuakes(),
         alerts: NWSAlertsStore.GetAlerts(),
-        endpoints: SystemStore.GetEndpoints()
+        endpoints: SystemStore.GetEndpoints(),
+        pollenLoaded: PollenStore.HasLoaded(),
+        newsLoaded: NewsStore.HasLoaded(),
+        weatherLoaded: WeatherStore.HasLoaded(),
+        calendarLoaded: CalendarStore.HasLoaded(),
+        quakesLoaded: QuakeStore.HasLoaded(),
+        alertsLoaded: NWSAlertsStore.HasLoaded(),
+        systemLoaded: SystemStore.HasLoaded()
     });
 
     //  Check to see if 
@@ -114,15 +128,45 @@ class DashboardHome extends Component {
     //  Replace these with either calls that let the local API figure 
     //  out what the config is, or gather the config before making 
     //  these calls here
-    PollenAPI.getPollen("30019"); //  We could just let the API get this based on the stored zipcode
+    PollenAPI.getPollen();
     NewsAPI.getNews();
     QuakeAPI.getQuakes();
-    WeatherAPI.getWeather("34.016410", "-83.906870"); //  We could just let the API get this based on the stored coordinates
-    NWSAlertsAPI.getWeatherAlerts("34.016410", "-83.906870"); //  We could just let the API get this based on the stored coordinates
-    CalendarAPI.getCalendarEvents("https://calendar.google.com/calendar/ical/mg8l31ag8ua059trmktgdq6v80%40group.calendar.google.com/private-342fffdc823bfcaea433775659169545/basic.ics", "America/New_York");
+    WeatherAPI.getWeather(); 
+    NWSAlertsAPI.getWeatherAlerts(); 
+    CalendarAPI.getCalendarEvents();
   }
 
   render() {
+
+    //  If we're not done loading, show the loading animation
+    if(!(this.state.pollenLoaded 
+      && this.state.newsLoaded 
+      && this.state.weatherLoaded 
+      && this.state.calendarLoaded 
+      && this.state.quakesLoaded 
+      && this.state.alertsLoaded 
+      && this.state.systemLoaded )){        
+      return(
+        <div className="loadContainer">            
+            <div className="loading">
+            
+            <div className="sk-grid">
+              <div className="sk-grid-cube"></div>
+              <div className="sk-grid-cube"></div>
+              <div className="sk-grid-cube"></div>
+              <div className="sk-grid-cube"></div>
+              <div className="sk-grid-cube"></div>
+              <div className="sk-grid-cube"></div>
+              <div className="sk-grid-cube"></div>
+              <div className="sk-grid-cube"></div>
+              <div className="sk-grid-cube"></div>
+            </div>
+
+            
+            </div>              
+        </div>
+      );
+    }
 
     return (
       <React.Fragment>       
