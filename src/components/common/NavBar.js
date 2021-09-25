@@ -8,7 +8,7 @@ function NavBar(props) {
             <a className="navbar-item" href="/">
               <span className="icon-text">
                 <span className="icon">
-                  <i className="fab fa-cloudversify"></i>
+                  <i className="fab fa-cloudversify"/>
                 </span>
                 <span>Daydash</span>
               </span>
@@ -17,7 +17,7 @@ function NavBar(props) {
             <a className="navbar-item" href="/settings">
               Settings
             </a>                              
-          </div>                
+          </div>                          
         </nav>
     );
 }

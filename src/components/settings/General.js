@@ -263,7 +263,7 @@ class GeneralSettings extends Component {
                     <div className="field mt-4">
                       <label className="label">Location</label>
                       <div className="control">
-                        <input className="input" type="text" placeholder="latitude,longitude" value={this.state.location} disabled={this.state.zipforlocation === "true" ? true : false} onChange={this._locationChange}/>
+                        <input className="input" type="text" placeholder="latitude,longitude" value={this.state.location} disabled={this.state.zipforlocation === true ? true : false} onChange={this._locationChange}/>
                       </div>
                     </div>
                     
@@ -277,12 +277,19 @@ class GeneralSettings extends Component {
                 </div>           
 
                 <hr />
+                
                 <h2 className="subtitle">Calendar information</h2>
                 <p className="content">Your <strong>Calendar URL</strong> is used to show today's events from any calendar you choose.  Help getting this url from <a href="https://support.google.com/calendar/answer/37648?hl=en&ref_topic=10509542#zippy=%2Cget-your-calendar-view-only" target="_blank" rel="noreferrer">Google Calendar</a> or <a href="https://www.techrepublic.com/article/how-to-find-your-icloud-calendar-url/" target="_blank" rel="noreferrer">iCloud Calendar</a> or <a href="https://support.microsoft.com/en-us/office/share-your-calendar-in-outlook-on-the-web-7ecef8ae-139c-40d9-bae2-a23977ee58d5" target="_blank" rel="noreferrer">Outlook</a>.</p>
                 <div className="field">
                   <label className="label">Calendar URL</label>
                   <div className="control">
                     <input className="input" name="calendarUrl" type="url" placeholder="Enter calendar URL" value={this.state.calendarUrl} onChange={this._handleInputChange} />
+                  </div>
+                </div>
+                <div className="field mt-4">
+                  <label className="label">Timezone</label>
+                  <div className="control">
+                    <input className="input" type="text" placeholder="latitude,longitude" value={this.state.location} disabled={this.state.zipforlocation === true ? true : false} onChange={this._locationChange}/>
                   </div>
                 </div>
 

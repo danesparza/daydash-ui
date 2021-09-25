@@ -12,6 +12,7 @@ import CalendarBox from './calendar/CalendarBox';
 
 //  Stores
 import SystemStore from '../stores/SystemStore';
+import ConfigStore from '../stores/ConfigStore';
 import PollenStore from '../stores/PollenStore';
 import NewsStore from '../stores/NewsStore';
 import WeatherStore from '../stores/WeatherStore';
@@ -26,6 +27,7 @@ import WeatherAPI from '../api/weather.api';
 import CalendarAPI from '../api/calendar.api';
 import QuakeAPI from '../api/quake.api';
 import NWSAlertsAPI from '../api/nwsalerts.api';
+import ConfigAPI from '../api/config.api';
 
 
 class DashboardHome extends Component {
@@ -41,13 +43,15 @@ class DashboardHome extends Component {
         quakes: QuakeStore.GetQuakes(),
         alerts: NWSAlertsStore.GetAlerts(),
         endpoints: SystemStore.GetEndpoints(),
+        config: ConfigStore.GetConfig(),
         pollenLoaded: PollenStore.HasLoaded(),
         newsLoaded: NewsStore.HasLoaded(),
         weatherLoaded: WeatherStore.HasLoaded(),
         calendarLoaded: CalendarStore.HasLoaded(),
         quakesLoaded: QuakeStore.HasLoaded(),
         alertsLoaded: NWSAlertsStore.HasLoaded(),
-        systemLoaded: SystemStore.HasLoaded()
+        systemLoaded: SystemStore.HasLoaded(),
+        configLoaded: ConfigStore.HasLoaded()
     };
 
     this.socketSet = false;    
@@ -62,13 +66,15 @@ class DashboardHome extends Component {
         quakes: QuakeStore.GetQuakes(),
         alerts: NWSAlertsStore.GetAlerts(),
         endpoints: SystemStore.GetEndpoints(),
+        config: ConfigStore.GetConfig(),
         pollenLoaded: PollenStore.HasLoaded(),
         newsLoaded: NewsStore.HasLoaded(),
         weatherLoaded: WeatherStore.HasLoaded(),
         calendarLoaded: CalendarStore.HasLoaded(),
         quakesLoaded: QuakeStore.HasLoaded(),
         alertsLoaded: NWSAlertsStore.HasLoaded(),
-        systemLoaded: SystemStore.HasLoaded()
+        systemLoaded: SystemStore.HasLoaded(),
+        configLoaded: ConfigStore.HasLoaded()
     });
 
     //  Check to see if 
@@ -108,6 +114,7 @@ class DashboardHome extends Component {
     this.quakeListener = QuakeStore.addListener(this._onChange);
     this.alertsListener = NWSAlertsStore.addListener(this._onChange);
     this.systemListener = SystemStore.addListener(this._onChange);
+    this.configListener = ConfigStore.addListener(this._onChange);
   }  
 
   componentWillUnmount() {
@@ -122,6 +129,7 @@ class DashboardHome extends Component {
     this.quakeListener.remove();
     this.alertsListener.remove();
     this.systemListener.remove();
+    this.configListener.remove();
   }
 
   tick = () => {
@@ -133,41 +141,36 @@ class DashboardHome extends Component {
     QuakeAPI.getQuakes();
     WeatherAPI.getWeather(); 
     NWSAlertsAPI.getWeatherAlerts(); 
-    CalendarAPI.getCalendarEvents();
+    CalendarAPI.getCalendarEvents();    
+    ConfigAPI.getConfig();
   }
 
   render() {
 
-    //  If we're not done loading, show the loading animation
+    //  If we're not done loading, show the loading indicator
     if(!(this.state.pollenLoaded 
       && this.state.newsLoaded 
       && this.state.weatherLoaded 
       && this.state.calendarLoaded 
       && this.state.quakesLoaded 
       && this.state.alertsLoaded 
-      && this.state.systemLoaded )){        
+      && this.state.systemLoaded 
+      && this.state.configLoaded)){        
       return(
-        <div className="loadContainer">            
+        <div className="loadContainer">
             <div className="loading">
-            
-            <div className="sk-grid">
-              <div className="sk-grid-cube"></div>
-              <div className="sk-grid-cube"></div>
-              <div className="sk-grid-cube"></div>
-              <div className="sk-grid-cube"></div>
-              <div className="sk-grid-cube"></div>
-              <div className="sk-grid-cube"></div>
-              <div className="sk-grid-cube"></div>
-              <div className="sk-grid-cube"></div>
-              <div className="sk-grid-cube"></div>
-            </div>
-
-            
+              <i className="fab fa-cloudversify"/>Daydash   
+              <p className="lc"><i className={`far ${this.state.weatherLoaded ? "fa-check-square loadOK" : "fa-square"}`}/> Scanning Weather</p>
+              <p className="lc"><i className={`far ${this.state.alertsLoaded ? "fa-check-square loadOK" : "fa-square"}`}/> Getting Weather alerts</p>                       
+              <p className="lc"><i className={`far ${this.state.newsLoaded ? "fa-check-square loadOK" : "fa-square"}`}/> Reading News</p>
+              <p className="lc"><i className={`far ${this.state.quakesLoaded ? "fa-check-square loadOK" : "fa-square"}`}/> Fetching Quakes</p>
+              <p className="lc"><i className={`far ${this.state.calendarLoaded ? "fa-check-square loadOK" : "fa-square"}`}/> Opening Calendar</p>
             </div>              
         </div>
       );
     }
 
+    //  Otherwise, show the dashboard
     return (
       <React.Fragment>       
         <div className="dashboard is-hidden-mobile">        
@@ -179,7 +182,7 @@ class DashboardHome extends Component {
               
               {/* The weather section  */}
               <div className="column">              
-                  <WeatherBox weather={this.state.weather} pollen={this.state.pollen} alerts={this.state.alerts}/>
+                  <WeatherBox weather={this.state.weather} pollen={this.state.pollen} alerts={this.state.alerts} config={this.state.config}/>
               </div>
     
               {/* The time and calendar section  */}
