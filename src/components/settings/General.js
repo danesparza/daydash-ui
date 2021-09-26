@@ -288,8 +288,10 @@ class GeneralSettings extends Component {
                 </div>
                 <div className="field mt-4">
                   <label className="label">Timezone</label>
-                  <div className="control">
-                    <input className="input" type="text" placeholder="latitude,longitude" value={this.state.location} disabled={this.state.zipforlocation === true ? true : false} onChange={this._locationChange}/>
+                  <div className="select">
+                    <select id="calendarTimezone" name="calendarTimezone" value={this.state.calendarTimezone} onChange={this._handleInputChange}>                            
+                        <option value="usa">All United States</option>
+                    </select>
                   </div>
                 </div>
 

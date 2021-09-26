@@ -12,7 +12,7 @@ class ConfigStore extends Store {
           zipcode: 0,
           useZipcodeForLocation: true,
           radarStation: "csg",
-          location: "",
+          location: ",",
           calendarUrl: "",
           calendarTimezone: ""        
       };

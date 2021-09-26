@@ -181,7 +181,7 @@ class DashboardHome extends Component {
             <div className="columns">
               
               {/* The weather section  */}
-              <div className="column">              
+              <div className="column">                                                       
                   <WeatherBox weather={this.state.weather} pollen={this.state.pollen} alerts={this.state.alerts} config={this.state.config}/>
               </div>
     
@@ -193,8 +193,8 @@ class DashboardHome extends Component {
                 <div className="currentDateDisplay">
                   <DateDisplay/>
                 </div>
-                <div className="calendarContainer has-text-left">
-                  <CalendarBox events={this.state.calendar}/>
+                <div className="calendarContainer has-text-left">                                                          
+                  <CalendarBox events={this.state.calendar} config={this.state.config}/>
                 </div>
                 
               </div>                      
@@ -202,8 +202,9 @@ class DashboardHome extends Component {
           </div>
           
         </div>
-        <footer className="dashboardFooter is-hidden-mobile">
-          {/* News at the bottom  */}
+        
+        {/* News at the bottom  */}
+        <footer className="dashboardFooter is-hidden-mobile">          
           <div className="columns">
               <NewsBox quakes={this.state.quakes} news={this.state.news}/>
           </div>
