@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import QRCode from 'qrcode.react'; // Used in the weather notification.  We can move that to its own component
 import ZipToGeo from '../../utility/ziptogeo';
+import { timeZonesNames } from "@vvo/tzdb";
+import tzlookup from 'tz-lookup';
 
 //  APIs
 import ConfigAPI from '../../api/config.api';
@@ -80,9 +82,14 @@ class GeneralSettings extends Component {
           let lat, long;
           ({lat, long} =  ZipToGeo(target.value));
 
+          const updatedTZ = tzlookup(lat, long);
+
           //  Update the state for latitude and longitude here (the map should redraw)
+          //  ...also update the calendar timezone
+
           this.setState({
-            location: `${lat},${long}`
+            location: `${lat},${long}`,
+            calendarTimezone: updatedTZ
           });
         } catch(err) {
           console.log(err);
@@ -189,6 +196,11 @@ class GeneralSettings extends Component {
         //  The 'USA' url gets formatted differently
         radarUrl = "https://s.w-x.co/staticmaps/wu/wxtype/none/usa/animate.png";
       }
+
+      //  Format the list of timezones:
+      const tzOptions = timeZonesNames.map((data, idx) => {
+        return <option value={data}>{data}</option>
+      });
       
       //  Format the QR code link:
       const remoteSettingsLink = `${this.state.endpoints.ui}settings`;      
@@ -290,7 +302,7 @@ class GeneralSettings extends Component {
                   <label className="label">Timezone</label>
                   <div className="select">
                     <select id="calendarTimezone" name="calendarTimezone" value={this.state.calendarTimezone} onChange={this._handleInputChange}>                            
-                        <option value="usa">All United States</option>
+                      {tzOptions}
                     </select>
                   </div>
                 </div>
