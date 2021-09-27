@@ -23,7 +23,7 @@ class GeneralSettings extends Component {
           endpoints: SystemStore.GetEndpoints(),
           config: ConfigStore.GetConfig(),
           configLoaded: ConfigStore.HasLoaded(),
-          zipcode: ConfigStore.GetConfig().zipcode.toString(),
+          zipcode: (ConfigStore.GetConfig().zipcode === 0 ? "" : ConfigStore.GetConfig().zipcode.toString()),
           zipforlocation: ConfigStore.GetConfig().useZipcodeForLocation,
           radarStation: ConfigStore.GetConfig().radarStation,
           calendarUrl: ConfigStore.GetConfig().calendarUrl,
@@ -38,7 +38,7 @@ class GeneralSettings extends Component {
         endpoints: SystemStore.GetEndpoints(),
         config: ConfigStore.GetConfig(),
         configLoaded: ConfigStore.HasLoaded(),
-        zipcode: ConfigStore.GetConfig().zipcode.toString(),
+        zipcode: (ConfigStore.GetConfig().zipcode === 0 ? "" : ConfigStore.GetConfig().zipcode.toString()),
         zipforlocation: ConfigStore.GetConfig().useZipcodeForLocation,
         radarStation: ConfigStore.GetConfig().radarStation,
         calendarUrl: ConfigStore.GetConfig().calendarUrl,
@@ -157,7 +157,9 @@ class GeneralSettings extends Component {
       ConfigAPI.saveConfig(config);
 
       //  Redirect to the main dashboard?
-      
+      setTimeout(function(){
+        window.location.href = "/";
+      }, 2000);
     }
 
     render() {
@@ -199,7 +201,7 @@ class GeneralSettings extends Component {
 
       //  Format the list of timezones:
       const tzOptions = timeZonesNames.map((data, idx) => {
-        return <option value={data}>{data}</option>
+        return <option value={data} key={data}>{data}</option>
       });
       
       //  Format the QR code link:

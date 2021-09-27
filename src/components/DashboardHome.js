@@ -51,7 +51,8 @@ class DashboardHome extends Component {
         quakesLoaded: QuakeStore.HasLoaded(),
         alertsLoaded: NWSAlertsStore.HasLoaded(),
         systemLoaded: SystemStore.HasLoaded(),
-        configLoaded: ConfigStore.HasLoaded()
+        configLoaded: ConfigStore.HasLoaded(),
+        configError: ConfigStore.HasError()
     };
 
     this.socketSet = false;    
@@ -74,8 +75,14 @@ class DashboardHome extends Component {
         quakesLoaded: QuakeStore.HasLoaded(),
         alertsLoaded: NWSAlertsStore.HasLoaded(),
         systemLoaded: SystemStore.HasLoaded(),
-        configLoaded: ConfigStore.HasLoaded()
+        configLoaded: ConfigStore.HasLoaded(),
+        configError: ConfigStore.HasError()
     });
+
+    //  If we've loaded and we have a config error, load the settings page:
+    if(this.state.configLoaded && this.state.configError){
+      window.location.href = "/settings";
+    }
 
     //  Check to see if 
     //  - the system information is available 
@@ -98,8 +105,11 @@ class DashboardHome extends Component {
   }
 
   _onSocket = (e) => {
-    //  Right now, when we get something from the socket, just emit it
-    console.log(e);
+    //  When we get something from the socket...
+    //  emit it
+    //  refresh data
+    console.log(e);   
+    this.tick();
   }
 
   componentDidMount() {    
@@ -160,11 +170,11 @@ class DashboardHome extends Component {
         <div className="loadContainer">
             <div className="loading">
               <i className="fab fa-cloudversify"/>Daydash   
-              <p className="lc"><i className={`far ${this.state.weatherLoaded ? "fa-check-square loadOK" : "fa-square"}`}/> Scanning Weather</p>
-              <p className="lc"><i className={`far ${this.state.alertsLoaded ? "fa-check-square loadOK" : "fa-square"}`}/> Getting Weather alerts</p>                       
-              <p className="lc"><i className={`far ${this.state.newsLoaded ? "fa-check-square loadOK" : "fa-square"}`}/> Reading News</p>
-              <p className="lc"><i className={`far ${this.state.quakesLoaded ? "fa-check-square loadOK" : "fa-square"}`}/> Fetching Quakes</p>
-              <p className="lc"><i className={`far ${this.state.calendarLoaded ? "fa-check-square loadOK" : "fa-square"}`}/> Opening Calendar</p>
+              <p className="lc"><i className={`${this.state.weatherLoaded ? "far fa-check-square loadOK" : "fas fa-spinner fa-spin"}`}/> Scanning Weather</p>
+              <p className="lc"><i className={`${this.state.alertsLoaded ? "far fa-check-square loadOK" : "fas fa-spinner fa-spin"}`}/> Getting Weather alerts</p>                       
+              <p className="lc"><i className={`${this.state.newsLoaded ? "far fa-check-square loadOK" : "fas fa-spinner fa-spin"}`}/> Reading News</p>
+              <p className="lc"><i className={`${this.state.quakesLoaded ? "far fa-check-square loadOK" : "fas fa-spinner fa-spin"}`}/> Fetching Quakes</p>
+              <p className="lc"><i className={`${this.state.calendarLoaded ? "far fa-check-square loadOK" : "fas fa-spinner fa-spin"}`}/> Opening Calendar</p>
             </div>              
         </div>
       );

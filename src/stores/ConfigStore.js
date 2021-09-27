@@ -11,8 +11,8 @@ class ConfigStore extends Store {
       this.configdata = {        
           zipcode: 0,
           useZipcodeForLocation: true,
-          radarStation: "csg",
-          location: ",",
+          radarStation: "usa",
+          location: "",
           calendarUrl: "",
           calendarTimezone: ""        
       };
@@ -40,6 +40,14 @@ class ConfigStore extends Store {
             console.log('Updating config store: ', action);
             this.configdata = action.data;
             this.loaded = true;
+            this.error = false;
+            this.__emitChange();
+            break;
+
+          case DashboardConstants.RECEIVE_SYSTEM_CONFIG_ERROR:
+            console.log('Updating config store: ', action);
+            this.loaded = true;
+            this.error = true;
             this.__emitChange();
             break;
     

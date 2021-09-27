@@ -9,6 +9,13 @@ class ConfigActions {
             data: configData.data
         });
     }
+
+    recieveConfigError(configError) {
+        AppDispatcher.dispatch({
+            actionType: DashboardConstants.RECEIVE_SYSTEM_CONFIG_ERROR,
+            error: configError
+        });
+    }
 }
 
 export default new ConfigActions();
