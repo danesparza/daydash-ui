@@ -28,6 +28,7 @@ import CalendarAPI from '../api/calendar.api';
 import QuakeAPI from '../api/quake.api';
 import NWSAlertsAPI from '../api/nwsalerts.api';
 import ConfigAPI from '../api/config.api';
+import SystemAPI from '../api/system.api';
 
 
 class DashboardHome extends Component {
@@ -153,6 +154,7 @@ class DashboardHome extends Component {
     NWSAlertsAPI.getWeatherAlerts(); 
     CalendarAPI.getCalendarEvents();    
     ConfigAPI.getConfig();
+    SystemAPI.getSystemEndpoints();  // This should never change, but there might be a problem on initialization
   }
 
   render() {
