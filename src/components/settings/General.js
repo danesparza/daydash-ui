@@ -120,6 +120,7 @@ class GeneralSettings extends Component {
 
       //  Parse the value:
       try {
+        // eslint-disable-next-line
         const useZipForLocation = target.value ? (target.value.toLowerCase() == "true") : false;
 
         //  Update the local state
