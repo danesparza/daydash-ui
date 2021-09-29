@@ -22,9 +22,9 @@ jobs:
             - node_modules
           key: node-cache-{{ checksum "package.json" }}
 
-      - run: 
-          name: Run tests
-          command: yarn test
+      #- run: 
+      #    name: Run tests
+      #    command: yarn test
 
       - run: 
           name: Create optimized production build
