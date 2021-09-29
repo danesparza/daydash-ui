@@ -2,7 +2,7 @@ import React from 'react';
 
 import {useRoutes} from 'hookrouter';
 import DashboardHome from './components/DashboardHome';
-import NotFound from './components/NotFound';
+import NotFound from './components/common/NotFound';
 import GeneralSettings from './components/settings/General';
 import NetworkSettings from './components/settings/Network';
 

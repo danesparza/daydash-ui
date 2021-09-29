@@ -1,7 +1,5 @@
-import '../App.css';
-import 'weathericons/css/weather-icons.css';
 
-function DashboardHome() {
+function NotFound() {
   return (
     <div className="App">
       <section className="section">
@@ -25,4 +23,4 @@ function DashboardHome() {
   );
 }
 
-export default DashboardHome;
+export default NotFound;

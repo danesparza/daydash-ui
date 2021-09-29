@@ -6,12 +6,18 @@ function WeatherAlert(props) {
     let showAlert = false;
 
     const currentAlerts = props.alerts.alerts; // Get alerts
-    const alertUrl = props.alerts.alertsurl;
+    let alertUrl = "";
+    let alertText = "";
 
-    if(currentAlerts.length > 0) 
-    {
-        showAlert = true; // Show the radar image
-    }    
+    //  Wrapped in try/catch just in case
+    try{
+        if(currentAlerts.length > 0) 
+        {
+            showAlert = true; // Show the radar image
+            alertText = currentAlerts[0].event;
+            alertUrl = props.alerts.alertsurl;
+        }
+    } catch {}        
 
     if(showAlert){
         alertMessage = (
@@ -28,7 +34,7 @@ function WeatherAlert(props) {
                         className="weatherAlertQR"
                         />
 
-                    <strong>{currentAlerts[0].event}</strong>                
+                    <strong>{alertText}</strong>                
                 </div>                      
             </div>
         );
