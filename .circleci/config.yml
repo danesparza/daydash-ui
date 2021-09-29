@@ -28,6 +28,7 @@ jobs:
 
       - run: 
           name: Create optimized production build
+          no_output_timeout: 20m
           command: yarn build
 
       # Execute the packaging process
