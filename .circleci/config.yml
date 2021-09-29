@@ -68,7 +68,7 @@ jobs:
 
       - run: 
          name: Push the release to Github
-         command: ghr -t $GITHUB_TOKEN -u $CIRCLE_PROJECT_USERNAME -r $CIRCLE_PROJECT_REPONAME v2.0.$CIRCLE_BUILD_NUM /tmp/workspace/daydash-ui.zip || true
+         command: ghr -prerelease -t $GITHUB_TOKEN -u $CIRCLE_PROJECT_USERNAME -r $CIRCLE_PROJECT_REPONAME v2.0.$CIRCLE_BUILD_NUM /tmp/workspace/daydash-ui.zip || true
 
 workflows:
   version: 2
