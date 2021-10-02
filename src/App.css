@@ -110,6 +110,7 @@ form.box{
 
 .currentTimeDisplay {
     font-size: 8vw;
+    color: #dadada;
 }
 
 .currentDateDisplay{
@@ -123,10 +124,19 @@ form.box{
 }
 
 .calendarTable{
-    color: #4a4a4a;
+    color: #dadada;
     background-color: #000;
     font-size: 1vw;
 }
+
+.table td,
+.table th {
+ border:1px solid #4a4a4a;
+ border-width:0 0 1px;
+ padding:.5em .75em;
+ vertical-align:top
+}
+
 
 tbody.calendarBody{
     background-color: #121212;
