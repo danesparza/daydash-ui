@@ -38,12 +38,12 @@ form.box{
 }
 
 .weatherAlertMessageBody {
-    padding: .5em .5em
+    padding: .75rem .75rem
 }
 
 .weatherAlertQR{
     vertical-align: middle;
-    margin: 0 10px 0 0;
+    margin: 0 0 0 10px;
 }
 
 .predomPollen {
