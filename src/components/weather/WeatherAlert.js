@@ -22,13 +22,13 @@ function WeatherAlert(props) {
     if(showAlert){
         alertMessage = (
             <div className="column is-align-self-flex-end">                                                     
-                <div className="weatherAlertMessageBody notification is-warning has-text-right ">                
-                    <strong>{alertText}</strong>
+                <div className="weatherAlertMessageBody is-warning has-text-right ">                
+                    {alertText}
                     <QRCode
                         value={alertUrl}
                         size={45}
                         bgColor={'transparent'}
-                        fgColor={"#4a4a4a"}
+                        fgColor={"#db9933"}
                         level={"L"}
                         includeMargin={false}
                         renderAs={"svg"}
