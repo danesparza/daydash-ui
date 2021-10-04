@@ -19,7 +19,7 @@ function WeatherRadar(props) {
     //  If we have a chance of rain > 10% in the next two hours, show the radar image.  Otherwise, show nothing
     let radarImage = "";
     let showRadar = false;
-
+    
     if( (props.currently.precipAccumulation > 1) /* We currently have a bit of precipitation */
         || /* Or this whole next statement */
         (props.hourlyweather.length > 0 /* We have items in the array */ 
@@ -32,7 +32,7 @@ function WeatherRadar(props) {
     }
 
     if(showRadar){
-        radarImage = (<div className="column"><img className="radarImage" alt="" src={radarUrl}/></div>);
+        radarImage = (<div className="column has-text-centered"><img className="radarImage" alt="" src={radarUrl}/></div>);
     }
     
     return radarImage;
