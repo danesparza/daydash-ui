@@ -28,8 +28,8 @@ function WeatherAlert(props) {
                         value={alertUrl}
                         size={50}
                         bgColor={'transparent'}
-                        fgColor={"#db9933"}
-                        level={"H"}
+                        fgColor={"#4a4a4a"}
+                        level={"L"}
                         includeMargin={false}
                         renderAs={"svg"}
                         className="weatherAlertQR"
