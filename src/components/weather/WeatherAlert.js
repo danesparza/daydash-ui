@@ -26,10 +26,10 @@ function WeatherAlert(props) {
                     {alertText}
                     <QRCode
                         value={alertUrl}
-                        size={45}
+                        size={50}
                         bgColor={'transparent'}
                         fgColor={"#db9933"}
-                        level={"L"}
+                        level={"H"}
                         includeMargin={false}
                         renderAs={"svg"}
                         className="weatherAlertQR"

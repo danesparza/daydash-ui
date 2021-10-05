@@ -57,7 +57,7 @@ class DashboardHome extends Component {
     };
 
     this.socketSet = false;    
-  }
+  }  
 
   _onChange = () => {
     this.setState({
@@ -131,7 +131,7 @@ class DashboardHome extends Component {
   componentWillUnmount() {
     //  Clear the interval:
     clearInterval(this.interval);
-
+    
     //  Remove listeners
     this.pollenListener.remove();
     this.newsListener.remove();    
