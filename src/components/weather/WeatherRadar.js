@@ -1,6 +1,10 @@
 
 function WeatherRadar(props) {
+    
+    let radarImage = "";
+    let showRadar = false;
 
+    //  **** FIRST, FORMAT THE RADAR IMAGE
     //  Get the radar location:
     const radarStation = props.config.radarStation;
 
@@ -15,11 +19,19 @@ function WeatherRadar(props) {
         //  The 'USA' url gets formatted differently
         radarUrl = `https://s.w-x.co/staticmaps/wu/wxtype/none/usa/animate.png?${imageHash}`;
     }
-    
-    //  If we have a chance of rain > 10% in the next two hours, show the radar image.  Otherwise, show nothing
-    let radarImage = "";
-    let showRadar = false;
-    
+
+    //  **** NEXT, DETERMINE IF WE WANT TO SHOW THE RADAR IMAGE
+    //  If we have weather alerts, show the radar image
+    const currentAlerts = props.alerts.alerts; // Get alerts
+    try{
+        if(currentAlerts.length > 0) 
+        {
+            //  Show the radar
+            showRadar = true;
+        }
+    } catch {}        
+
+    //  If we have a chance of rain > 10% in the next two hours, show the radar image.  
     if( (props.currently.precipAccumulation > 1) /* We currently have a bit of precipitation */
         || /* Or this whole next statement */
         (props.hourlyweather.length > 0 /* We have items in the array */ 

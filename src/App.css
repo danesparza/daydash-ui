@@ -7,6 +7,7 @@ body {
     padding: 0;
     margin: 0;  /* For Chrome, because its default stylesheet adds margin */  
     background-color: #000;
+    color: #717171;
   }
 /*****************************/
 
@@ -27,7 +28,7 @@ form.box{
 }
 
 .currentTemp{
-    font-size: 8vw;
+    font-size: 9vw;
 }
 
 .currentConditions{
@@ -46,18 +47,27 @@ form.box{
     color: #db9933;
     border-bottom: 1px solid;
     border-top: 1px solid;
+    padding: 1vh 0 1vh 0;
 }
 
 .weatherAlertQR{
-    margin: .7vh 0 0 .5vw;
+    margin: .5vh 0 0 .5vw;
 }
 
 .predomPollen {
     font-size: 1.2vw;
 }
 
+.predomPollen strong {
+    color: #717171;
+}
+
 .currentConditionsExtra{
     font-size: 1.2vw;
+}
+
+.currentConditionsExtra strong {
+    color: #717171;
 }
 
 .weatherHourlyPOP{
@@ -115,7 +125,7 @@ form.box{
 }
 
 .currentTimeDisplay {
-    font-size: 8vw;
+    font-size: 9vw;
     color: #dadada;
 }
 
@@ -160,6 +170,7 @@ tbody.calendarBody{
 .newsContent{
     font-size: .6vw;
     padding: 10px;
+    color: #717171;
 }
 
 .newsQR{

@@ -1,4 +1,3 @@
-import QRCode from 'qrcode.react'; 
 
 function WeatherAlert(props) {
 
@@ -6,7 +5,7 @@ function WeatherAlert(props) {
     let showAlert = false;
 
     const currentAlerts = props.alerts.alerts; // Get alerts
-    let alertUrl = "";
+    // let alertUrl = "";
     let alertText = "";
 
     //  Wrapped in try/catch just in case
@@ -15,25 +14,15 @@ function WeatherAlert(props) {
         {
             showAlert = true; // Show the radar image
             alertText = currentAlerts[0].event;
-            alertUrl = props.alerts.alertsurl;
+            // alertUrl = props.alerts.alertsurl;
         }
     } catch {}        
 
     if(showAlert){
         alertMessage = (
-            <div className="column is-align-self-flex-end">                                                     
-                <div className="weatherAlertMessageBody is-warning has-text-right ">                
+            <div className="column">                                                     
+                <div className="weatherAlertMessageBody has-text-centered">                      
                     {alertText}
-                    <QRCode
-                        value={alertUrl}
-                        size={50}
-                        bgColor={'transparent'}
-                        fgColor={"#4a4a4a"}
-                        level={"L"}
-                        includeMargin={false}
-                        renderAs={"svg"}
-                        className="weatherAlertQR"
-                        />                
                 </div>                      
             </div>
         );
