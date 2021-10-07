@@ -1,4 +1,4 @@
-import {Fragment, useState} from 'react';
+import {Fragment, useState, useEffect} from 'react';
 
 function Clock() {
     //  Set our time formatting options
@@ -6,27 +6,27 @@ function Clock() {
         hour12 : true,
         hour:  "numeric",
         minute: "numeric"
-     }
-
-    //  Set the initial time
-    const time = new Date().toLocaleTimeString("en-US", options).toLocaleLowerCase();
+     }    
 
     //  Setup the useState hook and pass the initial time
-    const [currentTime, setCurrentTime] = useState(time);
+    const [currentTime, setCurrentTime] = useState(new Date());
 
     //  Updates state with the current time
     function getTime() {
-        const time = new Date().toLocaleTimeString("en-US", options).toLocaleLowerCase();
-        setCurrentTime(time);
+        setCurrentTime(new Date());
     }
 
-    //  Call getTime every second, to update the time state
-    setInterval(getTime, 1000);
+    useEffect(() => {
+        const timerId = setInterval(getTime, 1000);
+        return function cleanup() {
+          clearInterval(timerId);
+        };
+      }, []);
 
     //  Render the current time
     return (
         <Fragment>
-            {currentTime}            
+            {currentTime.toLocaleTimeString("en-US", options).toLocaleLowerCase()}            
         </Fragment>
     );
 }

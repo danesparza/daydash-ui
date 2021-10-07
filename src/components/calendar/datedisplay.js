@@ -1,4 +1,4 @@
-import {Fragment, useState} from 'react';
+import {Fragment, useState, useEffect} from 'react';
 
 function DateDisplay() {
     //  Set our date formatting options
@@ -9,25 +9,25 @@ function DateDisplay() {
         day: 'numeric' 
     };
 
-    //  Set the initial date
-    const date = new Date().toLocaleDateString("en-US", options);
-
     //  Setup the useState hook and pass the initial date
-    const [currentDate, setCurrentDate] = useState(date);
+    const [currentDate, setCurrentDate] = useState(new Date());
 
     //  Updates state with the current date
     function getDate() {
-        const date = new Date().toLocaleDateString("en-US", options);
-        setCurrentDate(date);
+        setCurrentDate(new Date());
     }
 
-    //  Call getDate every second, to update the date state
-    setInterval(getDate, 1000);
+    useEffect(() => {
+        const timerId = setInterval(getDate, 1000);
+        return function cleanup() {
+          clearInterval(timerId);
+        };
+      }, []);
 
     //  Render the current date
     return (
         <Fragment>
-            {currentDate}            
+            {currentDate.toLocaleDateString("en-US", options)}            
         </Fragment>
     );
 }

@@ -1,20 +1,24 @@
+import ago from 's-ago';
 
 function WeatherAlert(props) {
 
     let alertMessage = "";
     let showAlert = false;
 
-    const currentAlerts = props.alerts.alerts; // Get alerts
-    // let alertUrl = "";
+    const currentAlerts = props.alerts.alerts; // Get alerts    
     let alertText = "";
+    let alertTime = "";
+    let alertTimeText = "";
 
     //  Wrapped in try/catch just in case
     try{
         if(currentAlerts.length > 0) 
-        {
-            showAlert = true; // Show the radar image
+        {   
+            showAlert = true; // Show the alert         
             alertText = currentAlerts[0].event;
-            // alertUrl = props.alerts.alertsurl;
+            const parsedAlertTime = Date.parse(currentAlerts[0].end);
+            alertTime = new Date(parsedAlertTime);
+            alertTimeText = "ends " + ago(alertTime);                       
         }
     } catch {}        
 
@@ -22,7 +26,7 @@ function WeatherAlert(props) {
         alertMessage = (
             <div className="column">                                                     
                 <div className="weatherAlertMessageBody has-text-centered">                      
-                    {alertText}
+                    {alertText} {alertTimeText}
                 </div>                      
             </div>
         );
