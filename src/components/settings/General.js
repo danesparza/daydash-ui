@@ -86,6 +86,7 @@ class GeneralSettings extends Component {
 
           //  Update the state for latitude and longitude here (the map should redraw)
           //  ...also update the calendar timezone
+          console.log("Updating location");
 
           this.setState({
             location: `${lat},${long}`,
@@ -104,12 +105,12 @@ class GeneralSettings extends Component {
 
       //  Format the value:
       try {
-        let formattedLocation = target.value;
+        let formattedLocation = target.value;        
 
         //  Update the local state
         this.setState({
           location : formattedLocation
-        });
+        });        
         
       } catch {}            
 
@@ -163,6 +164,10 @@ class GeneralSettings extends Component {
       }, 2000);
     }
 
+    _mapLoad = (e) => {
+      console.log('Loaded map image: ', e);
+    }
+
     render() {
 
       //  Loading placeholder:
@@ -191,7 +196,7 @@ class GeneralSettings extends Component {
 
       //  Format the item image url:
       const zoom = "11";
-      const fmtImageURL = `//${this.state.endpoints.service}/v1/image/map/${this.state.location}/${zoom}`; 
+      const fmtImageURL = `//${this.state.endpoints.service}/v1/image/map/${this.state.location}/${zoom}`;       
 
       //  Format the url
       let radarUrl = `https://s.w-x.co/staticmaps/wu/wxtype/county_loc/${this.state.radarStation}/animate.png`;
@@ -286,7 +291,7 @@ class GeneralSettings extends Component {
 
                   <div className="column">
                     <p className="content">A map of the location you entered:</p>
-                    <img className="settingsMapImage" src={fmtImageURL} alt=""/>
+                    <img className="settingsMapImage" src={fmtImageURL} onLoad={this._mapLoad} alt=""/>
                   </div>
 
                 </div>           

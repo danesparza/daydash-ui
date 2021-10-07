@@ -22,9 +22,12 @@ function WeatherRadar(props) {
 
     //  **** NEXT, DETERMINE IF WE WANT TO SHOW THE RADAR IMAGE
     //  If we have weather alerts, show the radar image
-    const currentAlerts = props.alerts.alerts; // Get alerts
+    const dtNow = new Date();
+    const currentAlerts = props.alerts.alerts; // Get alerts    
+    // Get alerts that end after right now
+    const upcomingEvents = currentAlerts.filter(item => Date.parse(item.end) > dtNow);
     try{
-        if(currentAlerts.length > 0) 
+        if(upcomingEvents.length > 0) 
         {
             //  Show the radar
             showRadar = true;
