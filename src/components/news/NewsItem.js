@@ -22,7 +22,7 @@ function NewsItem(props) {
     //  Finally ... trim after 100 chars and show an elipsis
     //  TODO: We might be able to take this out if we hide navigation
     if(fmtText.length > 110){
-        fmtText = fmtText.substring(0, 110) + "...";
+        fmtText = fmtText.substring(0, 150) + "...";
     }
 
     return (
