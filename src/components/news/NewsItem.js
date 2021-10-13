@@ -37,7 +37,7 @@ function NewsItem(props) {
                         value={props.item.storyurl}
                         size={50}
                         bgColor={'transparent'}
-                        fgColor={"#4a4a4a"}
+                        fgColor={"#999999"}
                         level={"L"}
                         includeMargin={false}
                         renderAs={"svg"}
