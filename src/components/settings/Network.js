@@ -24,6 +24,7 @@ class NetworkSettings extends Component {
           config: ConfigStore.GetConfig(),
           configLoaded: ConfigStore.HasLoaded(),
           wifiaps: SystemStore.GetWifiAPs(),
+          defaultAP: SystemStore.GetHighestQualityAP(),
           selectedAP: "",
           selectedAPPassword: ""
       };
@@ -36,6 +37,7 @@ class NetworkSettings extends Component {
         config: ConfigStore.GetConfig(),
         configLoaded: ConfigStore.HasLoaded(),
         wifiaps: SystemStore.GetWifiAPs(),
+        defaultAP: SystemStore.GetHighestQualityAP(),
         selectedAP: "", /* Get the stored selected AP */
         selectedAPPassword: "" /* Get the stored password */
       });
@@ -117,12 +119,31 @@ class NetworkSettings extends Component {
       }      
       
       //  Format the QR code link:
-      const remoteSettingsLink = `${this.state.endpoints.ui}network`;             
+      const remoteSettingsLink = `${this.state.endpoints.ui}network`;         
+      
+      //  Sort the APs by name
+      const sortedAPs = this.state.wifiaps.sort(function (a, b) {
+        if (a.essid < b.essid) {
+          return -1;
+        }
+        if (a.essid > b.essid) {
+          return 1;
+        }
+      
+        // names must be equal
+        return 0;
+      });
 
       //  Format the list of wifi APs:
-      const wifiOptions = this.state.wifiaps.map((data) => {
+      const wifiOptions = sortedAPs.map((data) => {
         return <option value={data.essid} key={data.essid}>{data.essid}</option>
       });
+
+      //  Get the selected AP (either one that was selected or the default)
+      let currentAP = this.state.selectedAP;
+      if(currentAP === ""){
+        currentAP = this.state.defaultAP;
+      }
 
       return (
         <div className="settings">
@@ -166,23 +187,27 @@ class NetworkSettings extends Component {
 
               <form className="box" onSubmit={this._saveConfig}>           
 
-                <div className="columns">
-                  
-                  <div className="column">     
-                    <h2 className="subtitle">Network settings</h2>
-                    <p className="content">Select your WiFi network (and enter a password if necessary).  This is used to connect to the internet and get weather, news and calendar information for your Dashboard</p>         
-                  
-                    <div className="field mt-4">
-                      <label className="label">Wifi Access Points</label>
-                      <div className="select">
-                        <select id="selectedAP" name="selectedAP" value={this.state.selectedAP} onChange={this._handleInputChange}>                            
-                          {wifiOptions}
-                        </select>
-                      </div>
-                    </div>
-
+                <h2 className="subtitle">Network settings</h2>
+                <p className="content">Select your WiFi network (and enter a password if necessary).  This is used to connect to the internet and get weather, news and calendar information for your Dashboard</p>         
+              
+                <div className="field mt-4">
+                  <label className="label">Wifi Access Point</label>
+                  <div className="select">
+                    <select id="selectedAP" name="selectedAP" value={currentAP} onChange={this._handleInputChange}>                            
+                      {wifiOptions}
+                    </select>
                   </div>
                 </div>
+
+                <div className="field mt-4">
+                  <label className="label">Password</label>
+                  <div className="control">
+                    <input className="input" id="selectedAPPassword" name="selectedAPPassword" type="password" placeholder="password" value={this.state.selectedAPPassword} onChange={this._handleInputChange}/>
+                  </div>
+                </div>
+
+                <button className="button is-primary" type="submit">Save</button>
+                  
               </form>
 
             </div>

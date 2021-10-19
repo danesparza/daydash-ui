@@ -37,7 +37,7 @@ class SystemStore extends Store {
 
       //  Find the ap with the highest signal quality
       const qualitySortedAps = this.wifiaps.sort(function (a, b) {
-        return a.signal_quality - b.signal_quality;
+        return b.signal_quality - a.signal_quality;
       });
 
       //  If there is at least one ap, return the first ESSID:
