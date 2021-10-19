@@ -9,6 +9,13 @@ class SystemActions {
             data: endpointData.data
         });
     }
+
+    recieveWIFIData(wifiData) {
+        AppDispatcher.dispatch({
+            actionType: DashboardConstants.RECEIVE_SYSTEM_WIFIAPS,
+            data: wifiData.data
+        });
+    }
 }
 
 export default new SystemActions();

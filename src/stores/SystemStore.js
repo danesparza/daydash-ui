@@ -13,6 +13,7 @@ class SystemStore extends Store {
       this.endpoints.ui = "";
       this.loaded = false;
       this.error = false;
+      this.wifiaps = [];
     }
 
     HasLoaded() {
@@ -27,6 +28,26 @@ class SystemStore extends Store {
       return this.endpoints;
     }
 
+    GetWifiAPs() {
+      return this.wifiaps;
+    }
+
+    GetHighestQualityAP() {
+      let retval = "";
+
+      //  Find the ap with the highest signal quality
+      const qualitySortedAps = this.wifiaps.sort(function (a, b) {
+        return a.signal_quality - b.signal_quality;
+      });
+
+      //  If there is at least one ap, return the first ESSID:
+      if(qualitySortedAps.length > 0){
+        retval = qualitySortedAps[0].essid;
+      }       
+
+      return retval;
+    }
+
     __onDispatch(action) {
     
         switch(action.actionType) {          
@@ -37,6 +58,12 @@ class SystemStore extends Store {
             this.loaded = true;
             this.__emitChange();
             break;
+
+          case DashboardConstants.RECEIVE_SYSTEM_WIFIAPS:
+              console.log('Updating system store: ', action);
+              this.wifiaps = action.data;              
+              this.__emitChange();
+              break;
     
           default:
             // no op
