@@ -25,6 +25,16 @@ function WeatherBox(props) {
                 {/* Regular weather box starts here with the current conditions display */}
                 <div className="column has-text-centered">
                     <WeatherIcon current="true" icon={props.weather.currently.icon} latitude={props.weather.latitude} longitude={props.weather.longitude} /> <span className="currentTemp"><WeatherTemp temperature={currentTemp} /></span>                               
+
+                    {/* Display next hour precipitation */}
+                    {/* 
+                    <div style="text-align: left;">    
+                        <span>Next hour:</span>
+                        <img src="/wi/rainpixel.png" alt="" style="height: 17px;max-width: 5px;"/>
+                        <img src="/wi/rainpixel.png" alt="" style="height: 10px;max-width: 5px;"/>
+                        <img src="/wi/rainpixel.png" alt="" style="height: 8px;max-width: 5px;"/>
+                    </div>
+                    */}
                 </div>
 
                 {/* Radar image, if storm is approaching */}
