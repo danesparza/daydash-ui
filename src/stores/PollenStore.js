@@ -10,7 +10,7 @@ class PollenStore extends Store {
       //  Set initial expected state
       this.pollendata = {};
       this.pollendata.data = [];
-      this.pollendata.predominant_pollen = "...";
+      this.pollendata.predominant_pollen = "N/A";
       this.loaded = false;
       this.error = false;
     }
@@ -33,7 +33,9 @@ class PollenStore extends Store {
     
           case DashboardConstants.RECEIVE_RAW_POLLEN:
             console.log('Updating pollen store: ', action);
-            this.pollendata = action.data;
+            if(action.data.data !=  null){
+              this.pollendata = action.data;
+            }            
             this.loaded = true;
             this.__emitChange();
             break;
