@@ -5,17 +5,17 @@ function WeatherAlert(props) {
     let alertMessage = "";
     let showAlert = false;
 
-    const dtNow = new Date();
-    const currentAlerts = props.alerts.alerts; // Get alerts    
-    // Get alerts that end after right now
-    const upcomingEvents = currentAlerts.filter(item => Date.parse(item.end) > dtNow);
-
     let alertText = "";
     let alertTime = "";
     let alertTimeText = "";
 
     //  Wrapped in try/catch just in case
     try{
+        const dtNow = new Date();
+        const currentAlerts = props.alerts.alerts; // Get alerts    
+        // Get alerts that end after right now
+        const upcomingEvents = currentAlerts.filter(item => Date.parse(item.end) > dtNow);
+    
         if(upcomingEvents.length > 0) 
         {               
             showAlert = true; // Show the alert         
