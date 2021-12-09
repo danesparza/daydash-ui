@@ -31,7 +31,15 @@ class NewsStore extends Store {
     
           case DashboardConstants.RECEIVE_RAW_NEWS_EVENTS:
             console.log('Updating news store: ', action);
-            this.newsdata = action.data;
+            
+            //  Only update the data array if we have more than 1 item
+            if(action.data.items.length > 1){
+              this.newsdata = action.data;
+            }
+
+            //  Either way, indicate that we got something back.
+            //  This means that:  If it's the initial load and we're getting
+            //  only a single item back (for whatever reason) news won't show initially
             this.loaded = true;
             this.__emitChange();
             break;
