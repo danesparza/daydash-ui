@@ -16,6 +16,13 @@ class SystemActions {
             data: wifiData.data
         });
     }
+
+    recieveVersionData(versionData) {
+        AppDispatcher.dispatch({
+            actionType: DashboardConstants.RECEIVE_SYSTEM_VERSIONINFO,
+            data: versionData.data
+        });
+    }
 }
 
 export default new SystemActions();

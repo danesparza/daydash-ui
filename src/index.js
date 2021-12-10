@@ -16,6 +16,7 @@ import NWSAlertsAPI from './api/nwsalerts.api';
 
 //  Kick off API initialization
 SystemAPI.getSystemEndpoints();
+SystemAPI.getVersionInfo();
 ConfigAPI.getConfig();
 PollenAPI.getPollen();
 NewsAPI.getNews();

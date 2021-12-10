@@ -14,6 +14,7 @@ class SystemStore extends Store {
       this.loaded = false;
       this.error = false;
       this.wifiaps = [];
+      this.versioninfo = {};
     }
 
     HasLoaded() {
@@ -26,6 +27,10 @@ class SystemStore extends Store {
 
     GetEndpoints() {
       return this.endpoints;
+    }
+
+    GetVersionInfo() {
+      return this.versioninfo;
     }
 
     GetWifiAPs() {
@@ -64,6 +69,12 @@ class SystemStore extends Store {
               this.wifiaps = action.data;              
               this.__emitChange();
               break;
+
+          case DashboardConstants.RECEIVE_SYSTEM_VERSIONINFO:
+            console.log('Updating system store: ', action);
+            this.versioninfo = action.data;              
+            this.__emitChange();
+            break;
     
           default:
             // no op
