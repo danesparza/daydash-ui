@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import QRCode from 'qrcode.react'; // Used in the weather notification.  We can move that to its own component
+import QRCode from 'qrcode.react'; // Used in the remote settings link
 
 //  APIs
 import ConfigAPI from '../../api/config.api';

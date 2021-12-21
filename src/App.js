@@ -5,6 +5,7 @@ import DashboardHome from './components/DashboardHome';
 import NotFound from './components/common/NotFound';
 import GeneralSettings from './components/settings/General';
 import NetworkSettings from './components/settings/Network';
+import SetupWizard from './components/setup/Wizard';
 
 //  Global Styles
 import 'weathericons/css/weather-icons.css';
@@ -17,7 +18,8 @@ import NavBar from './components/common/NavBar';
 const routes = {
   '/': () => <DashboardHome />,
   '/settings': () => <GeneralSettings />,
-  '/network': () => <NetworkSettings />  
+  '/network': () => <NetworkSettings />,
+  '/setup': () => <SetupWizard />  
 };
 
 const App = () => {

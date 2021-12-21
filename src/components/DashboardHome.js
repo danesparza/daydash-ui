@@ -80,7 +80,7 @@ class DashboardHome extends Component {
         configError: ConfigStore.HasError()
     });
 
-    //  If we've loaded and we have a config error, load the settings page:
+    //  If we've loaded and we have a config error, load the settings page (eventually the setup wizard):
     if(this.state.configLoaded && this.state.configError){
       window.location.href = "/settings";
     }
