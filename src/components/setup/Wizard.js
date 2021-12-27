@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import QRCode from 'qrcode.react'; // Used in the remote settings link
+
+// import QRCode from 'qrcode.react'; // Used in the remote settings link
 import StepWizard from "react-step-wizard";
 
 //  APIs
@@ -117,7 +118,7 @@ class SetupWizard extends Component {
         }      
         
         //  Format the QR code link:
-        const remoteSettingsLink = `${this.state.endpoints.ui}network`;         
+        // const remoteSettingsLink = `${this.state.endpoints.ui}network`;         
         
         //  Sort the APs by name
         const sortedAPs = this.state.wifiaps.sort(function (a, b) {
@@ -148,7 +149,7 @@ class SetupWizard extends Component {
               <section className="section">
                 <div className="container">
                     <StepWizard>
-                        <SetupNetwork />
+                        <SetupNetwork wifiOptions={wifiOptions} currentAP={currentAP} />
                         <SetupLocation />
                         <SetupCalendar />                
                     </StepWizard>
@@ -169,10 +170,23 @@ const SetupNetwork = ({
     previousStep,
     totalSteps,
     step,
+    wifiOptions,
+    currentAP
 }) => (
     <div>        
-        <div style={{ fontSize: '21px', fontWeight: '200' }}>
-            <h4>Setup Network</h4>
+        <div className='content is-large'>
+            <h1>Welcome to DayDash</h1>
+            <p>In the next three steps, we'll get DayDash setup for you.</p>
+            <h4>Network setup (step 1 of 3)</h4>
+            <p>DayDash needs to be able to connect to your Wifi network to get information about the weather, calendar events, breaking news, and more.</p>
+            <p>Please pick your wifi network (and enter your wifi password if it's required) and then press 'continue'.</p>
+            <div className="select">
+                <select id="selectedAP" name="selectedAP" value={currentAP}>                            
+                    {wifiOptions}
+                </select>
+            </div>                        
+        </div>
+        <div className='content is-large'>
             <button className='button is-primary' onClick={nextStep}>Continue</button>
         </div>
     </div>
@@ -189,9 +203,14 @@ const SetupLocation = ({
     step,
 }) => (
     <div>
-        <div style={{ fontSize: '21px', fontWeight: '200' }}>
-            <h4>Setup Location</h4>
+        <div className='content is-large'>
+        <h4>Location setup (step 2 of 3)</h4>
+            <p>DayDash needs your location for accurate weather information</p>
+            <p>Please enter your zip code and then press 'continue'.</p>                        
+        </div>
+        <div className='content is-large'>
             <button className='button' onClick={previousStep}>Back</button>
+            &nbsp;
             <button className='button is-primary' onClick={nextStep}>Continue</button>
         </div>
     </div>
@@ -208,9 +227,14 @@ const SetupCalendar = ({
     step,
 }) => (
     <div>
-        <div style={{ fontSize: '21px', fontWeight: '200' }}>
-            <h4>Setup Calendar</h4>
+        <div className='content is-large'>
+            <h4>Calendar setup (step 3 of 3)</h4>
+            <p>DayDash needs the url of your calendar</p>
+            <p>Please enter your calendar url and press 'finish'.</p>                        
+        </div>
+        <div className='content is-large'>
             <button className='button' onClick={previousStep}>Back</button>
+            &nbsp;
             <button className='button is-primary' onClick={nextStep}>Finish</button>
         </div>
     </div>
