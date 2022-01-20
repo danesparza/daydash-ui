@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 // import QRCode from 'qrcode.react'; // Used in the remote settings link
-import StepWizard from "react-step-wizard";
+import { Wizard, Steps, Step } from 'react-albus';
 
 //  APIs
 import ConfigAPI from '../../api/config.api';
@@ -148,11 +148,67 @@ class SetupWizard extends Component {
             <div className="settings">
               <section className="section">
                 <div className="container">
-                    <StepWizard>
-                        <SetupNetwork wifiOptions={wifiOptions} currentAP={currentAP} />
-                        <SetupLocation />
-                        <SetupCalendar />                
-                    </StepWizard>
+                  <Wizard>
+                    <Steps>
+                      <Step
+                        id="merlin"
+                        render={({ next }) => (
+                          <div>
+                            <div className='content is-large'>
+                              <h4>Setup: WiFi Network (step 1 of 3)</h4>
+                              <p>DayDash needs to be able to connect to your <b>WiFi network</b> to get information about the weather, calendar events, breaking news, and more.</p>
+                              <p>Please pick your WiFi network (and enter your WiFi password if it's required) and then press 'continue'.</p>
+                              <div className="select">
+                                  <select id="selectedAP" name="selectedAP" value={currentAP}>                            
+                                      {wifiOptions}
+                                  </select>
+                              </div>                        
+                            </div>
+                            <div className='content is-large'>
+                              <button className='button is-primary' onClick={next}>Next</button>
+                            </div>                            
+                          </div>
+                        )}
+                      />
+                      <Step
+                        id="gandalf"
+                        render={({ next, previous }) => (
+                          <div>
+                            <div className='content is-large'>
+                              <h4>Setup: Location (step 2 of 3)</h4>
+                              <p>DayDash needs your location for accurate weather information</p>
+                              <p>Please enter your zip code and then press 'continue'.</p>        
+                              <div className="field">
+                                  <div className="control">
+                                      <input className="input" name="zipcode" type="text" placeholder="ZIP code"/>                        
+                                  </div>
+                              </div>                      
+                            </div>
+                            <div className='content is-large'>
+                              <button className='button' onClick={previous}>Previous</button> &nbsp;
+                              <button className='button is-primary' onClick={next}>Next</button>
+                            </div>                                                        
+                          </div>
+                        )}
+                      />
+                      <Step
+                        id="dumbledore"
+                        render={({ previous }) => (
+                          <div>
+                            <div className='content is-large'>
+                              <h4>Setup: Calendar (step 3 of 3)</h4>
+                              <p>DayDash needs the url of your calendar</p>
+                              <p>Please enter your calendar url and press 'finish'.</p>                        
+                            </div>
+                            <div className='content is-large'>
+                              <button className='button' onClick={previous}>Previous</button> &nbsp;
+                              <button className='button is-primary'>Finish</button>
+                            </div>                            
+                          </div>
+                        )}
+                      />
+                    </Steps>
+                  </Wizard>
                 </div>
               </section>
             </div>
@@ -160,85 +216,6 @@ class SetupWizard extends Component {
       }
   }
 
-
-const SetupNetwork = ({
-    currentStep,
-    firstStep,
-    goToStep,
-    lastStep,
-    nextStep,
-    previousStep,
-    totalSteps,
-    step,
-    wifiOptions,
-    currentAP
-}) => (
-    <div>        
-        <div className='content is-large'>
-            <h1>Welcome to DayDash</h1>
-            <p>In the next three steps, we'll get DayDash setup for you.</p>
-            <h4>Network setup (step 1 of 3)</h4>
-            <p>DayDash needs to be able to connect to your Wifi network to get information about the weather, calendar events, breaking news, and more.</p>
-            <p>Please pick your wifi network (and enter your wifi password if it's required) and then press 'continue'.</p>
-            <div className="select">
-                <select id="selectedAP" name="selectedAP" value={currentAP}>                            
-                    {wifiOptions}
-                </select>
-            </div>                        
-        </div>
-        <div className='content is-large'>
-            <button className='button is-primary' onClick={nextStep}>Continue</button>
-        </div>
-    </div>
-);
-
-const SetupLocation = ({
-    currentStep,
-    firstStep,
-    goToStep,
-    lastStep,
-    nextStep,
-    previousStep,
-    totalSteps,
-    step,
-}) => (
-    <div>
-        <div className='content is-large'>
-        <h4>Location setup (step 2 of 3)</h4>
-            <p>DayDash needs your location for accurate weather information</p>
-            <p>Please enter your zip code and then press 'continue'.</p>                        
-        </div>
-        <div className='content is-large'>
-            <button className='button' onClick={previousStep}>Back</button>
-            &nbsp;
-            <button className='button is-primary' onClick={nextStep}>Continue</button>
-        </div>
-    </div>
-);
-
-const SetupCalendar = ({
-    currentStep,
-    firstStep,
-    goToStep,
-    lastStep,
-    nextStep,
-    previousStep,
-    totalSteps,
-    step,
-}) => (
-    <div>
-        <div className='content is-large'>
-            <h4>Calendar setup (step 3 of 3)</h4>
-            <p>DayDash needs the url of your calendar</p>
-            <p>Please enter your calendar url and press 'finish'.</p>                        
-        </div>
-        <div className='content is-large'>
-            <button className='button' onClick={previousStep}>Back</button>
-            &nbsp;
-            <button className='button is-primary' onClick={nextStep}>Finish</button>
-        </div>
-    </div>
-);
 
 export default SetupWizard;
   
