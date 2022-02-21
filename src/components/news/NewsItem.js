@@ -29,7 +29,7 @@ function NewsItem(props) {
         <div className="column">              
             <div className="card newsItem">
             <div className="card-image">
-                <img src={props.item.mediaurl} alt=""/>                
+                <img src={props.item.mediadata} alt=""/>                
             </div>              
             <div className="card-content newsContent">                
                 <div className="content">
