@@ -189,6 +189,10 @@ tbody.calendarBody{
     border: 1px #121212 solid;
 }
 
+.wizardZipcode{
+    max-width: 150px;
+}
+
 .loadContainer{
     flex: 1;
     display: flex;

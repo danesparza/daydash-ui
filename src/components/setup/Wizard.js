@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { timeZonesNames } from "@vvo/tzdb";
 
 // import QRCode from 'qrcode.react'; // Used in the remote settings link
 import { Wizard, Steps, Step } from 'react-albus';
@@ -143,6 +144,11 @@ class SetupWizard extends Component {
         if(currentAP === ""){
           currentAP = this.state.defaultAP;
         }
+
+        //  Format the list of timezones:
+        const tzOptions = timeZonesNames.map((data, idx) => {
+          return <option value={data} key={data}>{data}</option>
+        });
   
         return (
             <div className="settings">
@@ -157,7 +163,7 @@ class SetupWizard extends Component {
                             <div className='content is-large'>
                               <h4>Setup: WiFi Network (step 1 of 3)</h4>
                               <p>DayDash needs to be able to connect to your <b>WiFi network</b> to get information about the weather, calendar events, breaking news, and more.</p>
-                              <p>Please pick your WiFi network (and enter your WiFi password if it's required) and then press 'continue'.</p>
+                              <p>Please pick your WiFi network (and enter your WiFi password if it's required) and then press 'Next'.</p>
                               <div className="select">
                                   <select id="selectedAP" name="selectedAP" value={currentAP}>                            
                                       {wifiOptions}
@@ -177,12 +183,24 @@ class SetupWizard extends Component {
                             <div className='content is-large'>
                               <h4>Setup: Location (step 2 of 3)</h4>
                               <p>DayDash needs your location for accurate weather information</p>
-                              <p>Please enter your zip code and then press 'continue'.</p>        
-                              <div className="field">
-                                  <div className="control">
-                                      <input className="input" name="zipcode" type="text" placeholder="ZIP code"/>                        
-                                  </div>
-                              </div>                      
+                              <p>Please enter your zip code:</p>     
+
+                              
+                                <div className="field">
+                                    <div className="control">
+                                        <input className="input wizardZipcode" name="zipcode" type="text" placeholder="ZIP code"/>                        
+                                    </div>
+                                </div>
+                                
+                                <p>Verify your timezone and press 'Next':</p>
+                                <div className="field">
+                                    <div className="select control">
+                                      <select id="calendarTimezone" name="calendarTimezone" value={this.state.calendarTimezone} onChange={this._handleInputChange}>                            
+                                        {tzOptions}
+                                      </select>                        
+                                    </div>
+                                </div>
+                              
                             </div>
                             <div className='content is-large'>
                               <button className='button' onClick={previous}>Previous</button> &nbsp;
@@ -198,7 +216,14 @@ class SetupWizard extends Component {
                             <div className='content is-large'>
                               <h4>Setup: Calendar (step 3 of 3)</h4>
                               <p>DayDash needs the url of your calendar</p>
-                              <p>Please enter your calendar url and press 'finish'.</p>                        
+                              <p>Please enter your calendar url and press 'finish'.</p>
+
+                              <div className="field">
+                                  <div className="control">
+                                      <input className="input" name="calendarUrl" type="text" placeholder="Calendar URL"/>                        
+                                  </div>
+                              </div>
+
                             </div>
                             <div className='content is-large'>
                               <button className='button' onClick={previous}>Previous</button> &nbsp;
