@@ -165,7 +165,7 @@ class SetupWizard extends Component {
                               <p>DayDash needs to be able to connect to your <b>WiFi network</b> to get information about the weather, calendar events, breaking news, and more.</p>
                               <p>Please pick your WiFi network (and enter your WiFi password if it's required) and then press 'Next'.</p>
                               <div className="select">
-                                  <select id="selectedAP" name="selectedAP" value={currentAP}>                            
+                                  <select id="selectedAP" name="selectedAP" value={currentAP} onChange={this._handleInputChange}>                            
                                       {wifiOptions}
                                   </select>
                               </div>                        
@@ -188,14 +188,14 @@ class SetupWizard extends Component {
                               
                                 <div className="field">
                                     <div className="control">
-                                        <input className="input wizardZipcode" name="zipcode" type="text" placeholder="ZIP code"/>                        
+                                        <input className="input wizardZipcode" id="zipLocation" name="zipLocation" value={this.state.zipLocation} onChange={this._handleInputChange} type="text" placeholder="ZIP code"/>                        
                                     </div>
                                 </div>
                                 
                                 <p>Verify your timezone and press 'Next':</p>
                                 <div className="field">
                                     <div className="select control">
-                                      <select id="calendarTimezone" name="calendarTimezone" value={this.state.calendarTimezone} onChange={this._handleInputChange}>                            
+                                      <select id="tzLocation" name="tzLocation" value={this.state.tzLocation} onChange={this._handleInputChange}>                            
                                         {tzOptions}
                                       </select>                        
                                     </div>
@@ -215,12 +215,12 @@ class SetupWizard extends Component {
                           <div>
                             <div className='content is-large'>
                               <h4>Setup: Calendar (step 3 of 3)</h4>
-                              <p>DayDash needs the url of your calendar</p>
-                              <p>Please enter your calendar url and press 'finish'.</p>
+                              <p>Optional:  You can setup your calendar url now as well</p>
+                              <p>When you're done, press 'finish'.</p>
 
                               <div className="field">
                                   <div className="control">
-                                      <input className="input" name="calendarUrl" type="text" placeholder="Calendar URL"/>                        
+                                      <input className="input" name="calendarUrl" type="text" placeholder="Calendar URL - or leave blank if skipping"/>                        
                                   </div>
                               </div>
 
