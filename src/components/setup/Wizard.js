@@ -220,7 +220,7 @@ class SetupWizard extends Component {
 
                               <div className="field">
                                   <div className="control">
-                                      <input className="input" name="calendarUrl" type="text" placeholder="Calendar URL - or leave blank if skipping"/>                        
+                                      <input className="input" id="calendarUrl" name="calendarUrl" value={this.state.calendarUrl} onChange={this._handleInputChange} type="text" placeholder="Calendar URL - or leave blank if skipping"/>                        
                                   </div>
                               </div>
 
