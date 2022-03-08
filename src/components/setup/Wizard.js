@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
+import ZipToGeo from '../../utility/ziptogeo';
 import { timeZonesNames } from "@vvo/tzdb";
+import tzlookup from 'tz-lookup';
+
 
 // import QRCode from 'qrcode.react'; // Used in the remote settings link
 import { Wizard, Steps, Step } from 'react-albus';
@@ -106,6 +109,39 @@ class SetupWizard extends Component {
           [name]: value    
         });
       }
+
+      //  Change handler for zipcode.  Refreshes the map if there are exactly 5 digits entered
+    _zipChange = (event) => {
+      const target = event.target;
+      
+      //  Update the local state
+      this.setState({
+        zipcode : target.value
+      });
+
+      //  Update the coordinates if we have a 5 digit zip and we're using zip for location:      
+      if(target.value.length === 5){
+        try {
+          let lat, long;
+          ({lat, long} =  ZipToGeo(target.value));
+
+          //  Get the timezone
+          const updatedTZ = tzlookup(lat, long);
+
+          //  Update the state for latitude and longitude here
+          //  ...also update the timezone
+          console.log("Updating location");
+
+          this.setState({
+            location: `${lat},${long}`,
+            calendarTimezone: updatedTZ
+          });
+        } catch(err) {
+          console.log(err);
+        }                
+      }                  
+
+    }
   
       render() {
   
@@ -178,27 +214,30 @@ class SetupWizard extends Component {
                       />
                       <Step
                         id="gandalf"
-                        render={({ next, previous }) => (
+                        render={({ next, previous }) => ( 
                           <div>
                             <div className='content is-large'>
                               <h4>Setup: Location (step 2 of 3)</h4>
-                              <p>DayDash needs your location for accurate weather information</p>
+                              <p>DayDash needs your location for accurate time and weather information</p>
                               <p>Please enter your zip code:</p>     
 
-                              
                                 <div className="field">
                                     <div className="control">
                                         <input className="input wizardZipcode" id="zipLocation" name="zipLocation" value={this.state.zipLocation} onChange={this._handleInputChange} type="text" placeholder="ZIP code"/>                        
                                     </div>
                                 </div>
                                 
-                                <p>Verify your timezone and press 'Next':</p>
+                                <p>Verify your timezone:</p>
                                 <div className="field">
                                     <div className="select control">
-                                      <select id="tzLocation" name="tzLocation" value={this.state.tzLocation} onChange={this._handleInputChange}>                            
+                                      <select id="systemTimezone" name="systemTimezone" value={this.state.systemTimezone} onChange={this._handleInputChange}>                            
                                         {tzOptions}
-                                      </select>                        
+                                      </select>                                                              
                                     </div>
+                                </div>
+                                
+                                <div>
+                                  Verify your local time is {"4:02pm"}
                                 </div>
                               
                             </div>
