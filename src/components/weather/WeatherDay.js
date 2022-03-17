@@ -1,6 +1,7 @@
 import React from "react";
 import WeatherIcon from "./WeatherIcon";
 import WeatherTemp from './WeatherTemp';
+import WeatherPollen from './WeatherPollen';
 
 function WeatherDay(props) {
 
@@ -22,14 +23,9 @@ function WeatherDay(props) {
 
     //  If we have a pollen item for the current day, use it
     let pollenRow = "";
-    let pollenClass = "pollen-verylow";
     if(props.pollen.data.length > props.index) {
-        let pollenData = props.pollen.data[props.index];
-        if(pollenData > 2) {pollenClass = "pollen-low";}
-        if(pollenData > 5) {pollenClass = "pollen-warn";}
-        if(pollenData > 9) {pollenClass = "pollen-danger";}
-        pollenClass = "weatherWeekPollen " + pollenClass;          
-        pollenRow = <div className={pollenClass}>Pollen: {pollenData}</div>;
+        let pollenCount = props.pollen.data[props.index];          
+        pollenRow = <WeatherPollen count={pollenCount} />;
     }
 
     //  If this is the current day, use a special class -- otherwise use the defualt
